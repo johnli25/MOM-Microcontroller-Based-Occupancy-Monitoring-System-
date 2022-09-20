@@ -4,6 +4,8 @@
 - [2022-09-13: Meeting Notes](README.md#2022-09-13-meeting-notes)
 - [2022-09-14: Hardware Components Research](README.md#2022-09-14-Hardware-Components-research)
 - [2022-09-16: Meeting with Jack Blevins](README.md#2022-09-14-Meeting-With-Jack-Kilby)
+- [2022-09-16: Meeting-With-Jack-Blevins](README.md#2022-09-20-Meeting-With-TAy)
+
 
 ## 2022-09-13: Meeting-Notes
 
@@ -47,3 +49,5 @@ Some suggestions + improvements for our project proposal
 - Update visual aid to add a few more explicit labels ("Occupancy data", etc.)
 - Change "AWS IoT" in block diagram to "AWS server"
 - More comments can be found on project proposal document that TA sent back to us 
+
+We also discussed design document details. For example, creating a system/subsystem requirement | verification table. 
