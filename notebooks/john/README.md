@@ -13,7 +13,7 @@ Discussed with TA regarding our project proposal and our system and subsystem de
 - Expand high-level requirement involving power to include 24-hour availability while the board is plugged in.
 - Don't bother making your own Wi-Fi module; just buy one since budget is $150.
 
-## 2022-09-14: Hardware-Components-research
+## 2022-09-14: Hardware-Components-Research
 
 Since we have a limited $150 budget, all of our purchases will most likely be limited to Amazon, Digikey, and Mouser. Parts we are leaning toward using:
 
@@ -28,3 +28,14 @@ Since we have a limited $150 budget, all of our purchases will most likely be li
 - LiPo battery: safe, effective, efficient, and cheap. Moreover, the "ease and form factor" of LiPo batteries are a plus.
 - [AP2112 Voltage Regulator](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112M-3-3TRG1/5305555) (3.3V): The ESP32 series of SoCs all use 3.3 volts as their operating voltage. Since all USB types generally operating at or above 5 volts, we need to drop the voltage down. 3.3 V is a very common voltage for these sort of scenarios
 - [MCP73831T Battery Charge Controller](https://www.digikey.com/en/products/detail/microchip-technology/MCP73831T-2DCI-OT/1979804): mainly used to prevent overcharging
+
+## 2022-09-16: Meeting-With-Jack-Blevins
+
+We met with Jack Blevins, a UIUC alum whom has earned one of the first EECS degrees
+back in 1970 and has a 50+-year track record spanning all kinds of
+projects in industry (recommended to use by Professor Lumetta), and will essentially serve as another, "informal" mentor for our 445 project. Our team gave an overview of our project and followed up with some questions and comments from Jack:
+
+- Jack essentially solidified our design decision from earlier and agreed that trying to implement and incorporate 5 GHz frequency into our Wi-Fi module would be too impractical. 
+- For the Web programming side of things, we discussed which applications, languages, databases, etc. we were going to utilize. Since we established that we would be using AWS for our server side of things, we were leaning toward programming in Python and using a NoSQL Amazon database like DynamoDB. We were also open to using SQL or MongoDB from our discussions.
+- Exchanged contact information so we can contact Jack whenever if we had any technical queries regarding our project.
+
