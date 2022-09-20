@@ -39,3 +39,11 @@ projects in industry (recommended to use by Professor Lumetta), and will essenti
 - For the Web programming side of things, we discussed which applications, languages, databases, etc. we were going to utilize. Since we established that we would be using AWS for our server side of things, we were leaning toward programming in Python and using a NoSQL Amazon database like DynamoDB. We were also open to using SQL or MongoDB from our discussions.
 - Exchanged contact information so we can contact Jack whenever if we had any technical queries regarding our project.
 
+## 2022-09-20: Meeting-With-TA
+
+Some suggestions + improvements for our project proposal
+
+- Add range (+/- 1 minute) to occupancy updating time
+- Update visual aid to add a few more explicit labels ("Occupancy data", etc.)
+- Change "AWS IoT" in block diagram to "AWS server"
+- More comments can be found on project proposal document that TA sent back to us 
