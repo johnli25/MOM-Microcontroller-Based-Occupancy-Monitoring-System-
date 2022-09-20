@@ -16,7 +16,7 @@ Discussed with TA regarding our project proposal and our system and subsystem de
 ## 2022-09-14: Hardware-Components-research
 
 Since we have a limited $150 budget, all of our purchases will most likely be limited to Amazon, Digikey, and Mouser. Parts we are leaning toward using:
-- **Control Unit and Radio Scanner Suite**
+**Control Unit and Radio Scanner Suite**
   - [ESP32-S3-MINI-1](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf)
 - This ESP32 is versatile, not super expensive, offers various functionalities, and is used in many IoT projects, both hobbyist and professional.
 - Furthermore, this microcontroller has been proven to be compatible with AWS. 
