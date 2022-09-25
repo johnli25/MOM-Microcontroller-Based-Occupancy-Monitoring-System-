@@ -1,0 +1,3 @@
+[submodule "boards/esp32-kicad-files"]
+	path = boards/esp32-kicad-files
+	url = git@github.com:espressif/kicad-libraries.git
