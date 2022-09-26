@@ -54,3 +54,5 @@ Some suggestions + improvements for our project proposal
 We also discussed design document details. For example, creating a system/subsystem requirement | verification table. 
 
 ## 2022-09-25: Finished-First-Draft-Of-Design-Doc
+- Finished first draft of Design Doc
+- Main work we did was circuit schematics and requirements | verifications table for all the system & subsystem requirements
