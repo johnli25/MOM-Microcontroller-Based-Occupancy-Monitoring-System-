@@ -44,7 +44,7 @@ projects in industry (recommended to use by Professor Lumetta), and will essenti
 
 ## 2022-09-20: Meeting-With-TA
 
-Some suggestions + improvements for our project proposal
+TA also sent back feedback for our project proposal. Some suggestions + improvements for our it are:
 
 - Add range (+/- 1 minute) to occupancy updating time
 - Update visual aid to add a few more explicit labels ("Occupancy data", etc.)
