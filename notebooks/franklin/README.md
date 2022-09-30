@@ -5,6 +5,7 @@
 - [2022-09-14: Quick note about our traffic monitoring method](README.md#2022-09-14-quick-note-about-our-traffic-monitoring-method)
 - [2022-09-15: AWS Research](README.md#2022-09-15-aws-research)
 - [2022-09-24: Full Bill of Materials for MOM Node Prototype 1](README.md#2022-09-24-full-bill-of-materials-for-mom-node-prototype-1)
+- [2022-09-xx: Calculations for Resistances and Capacitances](README.md#2022-09-xx-calculations-for-resistances-and-capacitances)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
@@ -73,3 +74,6 @@ For me, this entire week was spent on finalizing the bill of materials for the f
   - This is the Diode-OR circuit that will decide whether the wall charger or the battery will power the node.  
 - [NRVB540MFS Diode Rectifier](https://www.mouser.com/ProductDetail/onsemi/NRVB540MFST1G?qs=xGcJQ%252BnsJwtnjlj0htu6yg%3D%3D)
   - This diode rectifier is used to keep the incoming power as steady as possible so that other components receive steady power.
+
+## 2022-09-xx: Calculations for Resistances and Capacitances
+- [USB-C Config Channel Resistor value (the MOM device will always be a sink)](https://www.st.com/resource/en/technical_article/dm00496853-overview-of-usb-type-c-and-power-delivery-technologies-stmicroelectronics.pdf)
