@@ -1,4 +1,4 @@
-20431542744314855
+20434871756760703
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57861,6 +57861,13 @@ WLCSP12, 3x4, 1.48x1.91mm, https://www.onsemi.com/pdf/datasheet/lc709204f-d.pdf
 0
 12
 12
+MAX17048G+T10
+SON50P200X200X80-9N
+
+
+0
+9
+9
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
@@ -76208,6 +76215,13 @@ Potentiometer vertical Vishay T73YP
 0
 3
 3
+Push_Button
+SW_TS04-66-65-BK-160-SMT
+
+
+0
+4
+4
 RF
 Skyworks_SKY13575_639LF
 http://www.skyworksinc.com/uploads/documents/SKY13575_639LF_203270D.pdf
