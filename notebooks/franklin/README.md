@@ -5,7 +5,7 @@
 - [2022-09-14: Quick note about our traffic monitoring method](README.md#2022-09-14-quick-note-about-our-traffic-monitoring-method)
 - [2022-09-15: AWS Research](README.md#2022-09-15-aws-research)
 - [2022-09-24: Full Bill of Materials for MOM Node Prototype 1](README.md#2022-09-24-full-bill-of-materials-for-mom-node-prototype-1)
-- [2022-09-xx: Calculations for Resistances and Capacitances](README.md#2022-09-xx-calculations-for-resistances-and-capacitances)
+- [2022-10-02: Calculations and Design Approaches for the Schematic](README.md#2022-10-02-calculations-and-design-approaches-for-the-schematic)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
@@ -75,5 +75,30 @@ For me, this entire week was spent on finalizing the bill of materials for the f
 - [NRVB540MFS Diode Rectifier](https://www.mouser.com/ProductDetail/onsemi/NRVB540MFST1G?qs=xGcJQ%252BnsJwtnjlj0htu6yg%3D%3D)
   - This diode rectifier is used to keep the incoming power as steady as possible so that other components receive steady power.
 
-## 2022-09-xx: Calculations for Resistances and Capacitances
-- [USB-C Config Channel Resistor value (the MOM device will always be a sink)](https://www.st.com/resource/en/technical_article/dm00496853-overview-of-usb-type-c-and-power-delivery-technologies-stmicroelectronics.pdf)
+## 2022-10-02: Calculations and Design Approaches for the Schematic
+- **USB Type-C** 
+  - Our decision to use USB for our device stems from the fact that our microcontroller needs to connect to our laptops somehow so that we can program them. Since all modern laptops have USB ports, it would make sense to have a USB interface with the microcontroller so that we can just plug in a USB cable.
+  - As we would like to "future-proof" our devices, we decided to go with a USB Type-C receptacle instead of a Micro USB (USB OTG) receptacle.
+  - USB is a standard which provides a bus to power devices and transfer data, which makes it a perfect all-in-one solution.
+  - MOM devices will never act as USB hosts, as they are simply going to be powered by a USB power supply or will just be programmed by a host computer, so they are (electrically) treated as a sink device on the Configuration Channel (CC) pins.
+    - All sink devices will need to have their Configuration Channel pins connected to 5.1K Ohm resistors that are connected to ground.
+    - ![USB Type-C Configuration Channel Requirements](math/USB-C_Config_Channel_Resistance.png)  
+    - A more in-depth review of the electrical aspects of USB Type-C can be seen in [this document provided by STMicroelectronics](https://www.st.com/resource/en/technical_article/dm00496853-overview-of-usb-type-c-and-power-delivery-technologies-stmicroelectronics.pdf).
+- **Battery Charging Circuit**
+  - Since we would like to have our backup battery charge while the MOM device is plugged into wall power, we will have a battery charging circuit on the MOM device.
+  - This battery charging circuit (part of the Power Supply subsystem) is made up of two ICs: an MCP73831 battery charge controller and a MAX17048G battery fuel gauge.
+  - The MCP73831 is a popular battery management controller for Lithium-Polymer batteries. As such, we chose it as our battery charge controller.
+    - Because we want to have each MOM device to last for at least one hour while on battery power, we calculated that the minimum battery capacity required to do so is at least 500mAh.
+    - For Lithium-Polymer batteries, it is unsafe to charge it at a current that is higher than its capacity divided by one hour. For our battery, this means that we should not charge it using a current higher than 500mA.
+    - The MCP73831 datasheet provides a simple formula (seen below) that we can use to set its charge rate by using a programming resistor at its "PROG" pin.
+    - ![MCP73831 charge rate formula from its datasheet](math/MCP73831_R_Prog_Formula.png)
+    - From this formula, we can see that the resistance of the programming resistor required to set the current to no more than 500mA is ***2K Ohms***.
+  - The MAX17048G is a battery fuel gauge that can calculate battery levels and communicate its findings over I2C. We plan on using this to display the battery level of each node so we can determine if there are any issues with the battery backup of that node.
+    - Since we are going to just use it as a simple fuel gauge, we decided to use the typical application circuit shown below (which was also from the datasheet).
+    - ![Simple MAX17048G fuel gauge circuit](math/MAX17048G_simple_fuel_gauge.png)
+- **Battery Backup Switchover**
+  - After doing some research, I found that the most efficient circuit for a (relatively) seamless battery backup switchover circuit involves a P-channel MOSFET. By having the voltage from USB as the gate, and the voltage from the battery as the source/drain, you can easily decide which power source to draw from.
+  - In this setup, when USB is powering the device, the voltage drop between the gate and source (Vgs) will be above the turn-on voltage range, so no power from the battery will go through. When USB is disconnected from the device, Vgs will be within the range of turn-on voltage range, allowing power from the battery to go through.
+  - There is a Schottky diode used to protect the USB power line from battery power. A Schottky diode was chosen due to its low turn-on/forward voltage, and the specific model being used was chosen due to its combination of high reverse voltage blocking and low reverse current leakage.
+- **Voltage Regulator**
+  - The AP2112 is a commonly used voltage regulator in microcontroller platforms that use 3.3 volts, so we picked it because of that. 

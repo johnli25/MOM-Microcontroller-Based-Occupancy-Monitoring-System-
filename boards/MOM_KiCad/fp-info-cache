@@ -1,4 +1,4 @@
-20434871756760703
+20436536723918448
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57854,15 +57854,15 @@ Yellow 5381 Series LED
 0
 2
 2
-Library
-WLCSP-12_1.48x1.91mm_NSMD
-WLCSP12, 3x4, 1.48x1.91mm, https://www.onsemi.com/pdf/datasheet/lc709204f-d.pdf
-
-0
-12
-12
 MAX17048G+T10
 SON50P200X200X80-9N
+
+
+0
+9
+9
+MCP73831-MC
+SON50P200X300X100-9N
 
 
 0
@@ -76222,6 +76222,13 @@ SW_TS04-66-65-BK-160-SMT
 0
 4
 4
+Push_Button
+SW_TS04-66-65-BK-160-SMT
+
+
+0
+4
+4
 RF
 Skyworks_SKY13575_639LF
 http://www.skyworksinc.com/uploads/documents/SKY13575_639LF_203270D.pdf
@@ -79134,6 +79141,13 @@ rotary encoder
 0
 5
 4
+SMBF
+D_SMBF_Handsoldering
+Diode SMB (DO-214AA) Handsoldering
+Diode SMB (DO-214AA) Handsoldering
+0
+2
+2
 Sensor
 Aosong_DHT11_5.5x12.0_P2.54mm
 Temperature and humidity module, http://akizukidenshi.com/download/ds/aosong/DHT11.pdf
