@@ -6,7 +6,8 @@
 - [2022-09-16: Meeting with Jack Blevins](README.md#2022-09-14-Meeting-With-Jack-Kilby)
 - [2022-09-20: Meeting-With-TA](README.md#2022-09-20-Meeting-With-TA)
 - [2022-09-25: Finished-First-Draft-Of-Design-Doc](README.md#2022-09-25-Finished-First-Draft-Of-Design-Doc)
-
+- [2022-10-04: Design-Document-review-and-presentation](README.md#2022-09-25-Design-Document-review-and-presentation)
+- [2022-10-07: Finalizing-and-Ordering-Parts](README.md#2022-10-07-Finalizing-and-Ordering-Parts)
 
 ## 2022-09-13: Meeting-Notes
 
@@ -54,5 +55,19 @@ TA also sent back feedback for our project proposal. Some suggestions + improvem
 We also discussed design document details. For example, creating a system/subsystem requirement | verification table. 
 
 ## 2022-09-25: Finished-First-Draft-Of-Design-Doc
+
 - Finished first draft of Design Doc
 - Main work we did was circuit schematics and requirements | verifications table for all the system & subsystem requirements
+
+## 2022-10-04: Design-Document-review-and-presentation
+
+- Prior to the Design document review on Monday (10/3/2022), our team made a couple revisions to some of the requirements and verifications, a block diagram, and the visual aid
+- Design document presentation on Tuesday (10/4/2022) went well! Lots of great and constructive feedback from TAs, Professor Fliflet, and student peer reviews
+- Judging from the feedback, the biggest functionality/implementation challenge we will most likely face is accurately estimating the Wi-Fi and Bluetooth signal strength/RSSI values while accurately pruning out "extra" or multiple signals and connected devices belonging to a single person.
+
+## 2022-10-07: Finalizing-and-Ordering-Parts
+
+- Our team finished finalizing and ordering all the necessary components for our project. Now we are just waiting for everything to arrive.
+
+
+
