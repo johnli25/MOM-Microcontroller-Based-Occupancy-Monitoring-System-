@@ -2,5 +2,8 @@
 	path = models/ESP32
 	url = git@github.com:espressif/kicad-libraries.git
 [submodule "code/feather/hardware/espressif/esp32"]
-	path = code/feather/hardware/espressif/esp32
+	path = code/hardware/espressif/esp32
+	url = https://github.com/espressif/arduino-esp32.git
+[submodule "code/MOM/hardware/espressif/esp32"]
+	path = code/MOM/hardware/espressif/esp32
 	url = https://github.com/espressif/arduino-esp32.git
