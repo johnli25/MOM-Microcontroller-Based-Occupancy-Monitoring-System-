@@ -102,3 +102,10 @@ For me, this entire week was spent on finalizing the bill of materials for the f
   - There is a Schottky diode used to protect the USB power line from battery power. A Schottky diode was chosen due to its low turn-on/forward voltage, and the specific model being used was chosen due to its combination of high reverse voltage blocking and low reverse current leakage.
 - **Voltage Regulator**
   - The AP2112 is a commonly used voltage regulator in microcontroller platforms that use 3.3 volts, so we picked it because of that. 
+
+## 2022-10-11: Concerns that arose while doing early testing
+Our parts came in earlier this week and we were able to pick them up. Among the parts that we ordered is a development board that we plan to use to code our microcontroller program while we wait for PCB orders to be fulfilled. As we started developing, we found out about an issue that would force us into making certain algorithm design decisions. This issue is how a device is able to randomize its Wi-Fi MAC address. For example, every time an iOS device sends a probe request, it will randomize its MAC address for each request. This would make it very difficult to have the true count of devices using just basic MAC address storage/lookup. 
+
+We're thinking that one way of mitigating this would be connecting to IllinoisNet instead of the IllinoisNet_Guest network so that we could truly monitor just IllinoisNet. This would cause each device to just be mapped to a single MAC address since the MAC address cannot be changed during a connection. Since IllinoisNet requires a certificate, we could do something similar to how [someone at UMich connected their ESP32 to their university's network](https://www.youtube.com/watch?v=bABHeMea-P0).
+
+Fortunately, one of the references in our RFA/design document proposes another way of mitigating this. You can read the proposed method in the [research publication on IEEE](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8747391).
