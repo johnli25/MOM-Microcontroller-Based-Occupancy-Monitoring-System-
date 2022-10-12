@@ -10,4 +10,4 @@ This folder contains Arduino code for the ESP32-S3 microcontroller. This include
 - Copy and paste the below line to the `Additional boards manager URLs`:
   - `https://arduino.esp8266.com/stable/package_esp8266com_index.json,https://dl.espressif.com/dl/package_esp32_index.json`
 - Restart the IDE. You should now be able to communicate with the board.
-- NOTE: If the IDE throws an error saying it couldn't get the FQDN, you will need to select the board from the topbar: `Tools->Board->ESP32 Arduino (in Sketchbook)
+- NOTE: If the IDE throws an error saying it couldn't get the FQDN, you will need to select the board from the topbar: `Tools->Port`
