@@ -8,6 +8,7 @@
 - [2022-09-25: Finished-First-Draft-Of-Design-Doc](README.md#2022-09-25-Finished-First-Draft-Of-Design-Doc)
 - [2022-10-04: Design-Document-review-and-presentation](README.md#2022-09-25-Design-Document-review-and-presentation)
 - [2022-10-07: Finalizing-and-Ordering-Parts](README.md#2022-10-07-Finalizing-and-Ordering-Parts)
+- [2022-10-18: More Findings about our Project](README.md#2022-10-07-More-Findings-about-our-Project)
 
 ## 2022-09-13: Meeting-Notes
 
@@ -66,6 +67,10 @@ We also discussed design document details. For example, creating a system/subsys
 - Judging from the feedback, the biggest functionality/implementation challenge we will most likely face is accurately estimating the Wi-Fi and Bluetooth signal strength/RSSI values while accurately pruning out "extra" or multiple signals and connected devices belonging to a single person.
 
 ## 2022-10-07: Finalizing-and-Ordering-Parts
+
+- Our team finished finalizing and ordering all the necessary components for our project. Now we are just waiting for everything to arrive.
+
+## 2022-10-18: More Findings about our Project 
 
 - Our team finished finalizing and ordering all the necessary components for our project. Now we are just waiting for everything to arrive.
 
