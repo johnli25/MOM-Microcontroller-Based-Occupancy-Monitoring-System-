@@ -6,6 +6,8 @@
 - [2022-09-15: AWS Research](README.md#2022-09-15-aws-research)
 - [2022-09-24: Full Bill of Materials for MOM Node Prototype 1](README.md#2022-09-24-full-bill-of-materials-for-mom-node-prototype-1)
 - [2022-10-02: Calculations and Design Approaches for the Schematic](README.md#2022-10-02-calculations-and-design-approaches-for-the-schematic)
+- [2022-10-11: Concerns that arose while doing early testing](README.md#2022-10-11-concerns-that-arose-while-doing-early-testing)
+- [2022-10-21: Thinking about implementation](README.md#2022-10-21-thinking-about-implementation)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
