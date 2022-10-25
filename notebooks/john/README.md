@@ -79,6 +79,7 @@ We also discussed design document details. For example, creating a system/subsys
 ## 2022-10-18: Implementation details and Assigning locker
 
 - We started writing the hardware arduino code for our project (Franklin started this) and cloud/AWS side of our project (Vish and I started looking and writing implementations for this)
+- We also got a locker assigned to us, but it currently does not work.
 
 
 
