@@ -6,6 +6,8 @@
 - [2022-09-15: AWS Research](README.md#2022-09-15-aws-research)
 - [2022-09-24: Full Bill of Materials for MOM Node Prototype 1](README.md#2022-09-24-full-bill-of-materials-for-mom-node-prototype-1)
 - [2022-10-02: Calculations and Design Approaches for the Schematic](README.md#2022-10-02-calculations-and-design-approaches-for-the-schematic)
+- [2022-10-11: Concerns that arose while doing early testing](README.md#2022-10-11-concerns-that-arose-while-doing-early-testing)
+- [2022-10-21: Thinking about implementation](README.md#2022-10-21-thinking-about-implementation)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
@@ -109,3 +111,6 @@ Our parts came in earlier this week and we were able to pick them up. Among the 
 We're thinking that one way of mitigating this would be connecting to IllinoisNet instead of the IllinoisNet_Guest network so that we could truly monitor just IllinoisNet. This would cause each device to just be mapped to a single MAC address since the MAC address cannot be changed during a connection. Since IllinoisNet requires a certificate, we could do something similar to how [someone at UMich connected their ESP32 to their university's network](https://www.youtube.com/watch?v=bABHeMea-P0).
 
 Fortunately, one of the references in our RFA/design document proposes another way of mitigating this. You can read the proposed method in the [research publication on IEEE](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8747391).
+
+## 2022-10-21: Thinking about implementation
+So while we're waiting for our PCB to come in, we've been developing using the development board that we ordered. So far, we have had a bit of success with the current code that we have. Now, we're trying to look for ways to optimize the counting algorithm and make it as accurate as we can. This involves a bit more testing and some more math. We've also started researching how to implment the IoT Cloud subsystem on AWS and how to connect the development board to it. 
