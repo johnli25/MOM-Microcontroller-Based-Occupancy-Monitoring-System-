@@ -109,3 +109,6 @@ Our parts came in earlier this week and we were able to pick them up. Among the 
 We're thinking that one way of mitigating this would be connecting to IllinoisNet instead of the IllinoisNet_Guest network so that we could truly monitor just IllinoisNet. This would cause each device to just be mapped to a single MAC address since the MAC address cannot be changed during a connection. Since IllinoisNet requires a certificate, we could do something similar to how [someone at UMich connected their ESP32 to their university's network](https://www.youtube.com/watch?v=bABHeMea-P0).
 
 Fortunately, one of the references in our RFA/design document proposes another way of mitigating this. You can read the proposed method in the [research publication on IEEE](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8747391).
+
+## 2022-10-21: Thinking about implementation
+So while we're waiting for our PCB to come in, we've been developing using the development board that we ordered. So far, we have had a bit of success with the current code that we have. Now, we're trying to look for ways to optimize the counting algorithm and make it as accurate as we can. This involves a bit more testing and some more math. We've also started researching how to implment the IoT Cloud subsystem on AWS and how to connect the development board to it. 
