@@ -8,7 +8,9 @@
 - [2022-09-25: Finished-First-Draft-Of-Design-Doc](README.md#2022-09-25-Finished-First-Draft-Of-Design-Doc)
 - [2022-10-04: Design-Document-review-and-presentation](README.md#2022-09-25-Design-Document-review-and-presentation)
 - [2022-10-07: Finalizing-and-Ordering-Parts](README.md#2022-10-07-Finalizing-and-Ordering-Parts)
-- [2022-10-18: More Findings about our Project](README.md#2022-10-07-More-Findings-about-our-Project)
+- [2022-10-18: More Findings about our Project](README.md#2022-10-18-More-Findings-about-our-Project)
+
+- [2022-10-25: Implementation details + Assigning locker](README.md#2022-10-18-Implementation-details-and-Assigning-locker)
 
 ## 2022-09-13: Meeting-Notes
 
@@ -72,7 +74,14 @@ We also discussed design document details. For example, creating a system/subsys
 
 ## 2022-10-18: More Findings about our Project 
 
-- Our team finished finalizing and ordering all the necessary components for our project. Now we are just waiting for everything to arrive.
+- Our team finished finalizing and ordering all the necessary components for our project (PCB, etc.). Now we are just waiting for everything to arrive.
+
+## 2022-10-18: Implementation details and Assigning locker
+
+- We started writing the hardware arduino code for our project (Franklin started this) and cloud/AWS side of our project (Vish and I started looking and writing implementations for this)
+- We also got a locker assigned to us, but it currently does not work.
+
+
 
 
 
