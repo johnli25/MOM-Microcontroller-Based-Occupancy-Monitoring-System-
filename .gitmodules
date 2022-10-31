@@ -7,3 +7,6 @@
 [submodule "code/MOM/hardware/espressif/esp32"]
 	path = code/MOM/hardware/espressif/esp32
 	url = https://github.com/espressif/arduino-esp32.git
+[submodule "code/libraries/esp32ping"]
+	path = code/libraries/esp32ping
+	url = git@github.com:marian-craciunescu/ESP32Ping.git
