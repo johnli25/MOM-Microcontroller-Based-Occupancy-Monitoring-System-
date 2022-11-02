@@ -11,8 +11,6 @@
 
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
-hw_timer_t * ping_timer = NULL;
-uint64_t connect_time;
 
 void pingTest() {
   bool ret = Ping.ping("a3368omdfuonoa-ats.iot.us-east-1.amazonaws.com", 10);
@@ -46,21 +44,17 @@ void connectAWS()
   client.onMessage(messageHandler);
 
   Serial.print("Connecting to AWS IOT");
-  ping_timer = timerBegin(0, 80, true);
-
+  
   while (!client.connect(THINGNAME)) {
     Serial.print(".");
     delay(10);
   }
-  connect_time = timerReadMilis(ping_timer);
+  
   if(!client.connected()){
     Serial.println("AWS IoT Timeout!");
     return;
   }
-  Serial.println("Connected in ");
-  Serial.print(connect_time);
-  Serial.print(" milliseconds.");
-
+  
   // Subscribe to a topic
   client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
 
@@ -71,7 +65,7 @@ void publishMessage()
 {
   StaticJsonDocument<200> doc;
   doc["time"] = millis();
-  doc["sensor_a0"] = analogRead(0);
+  doc["sender_mac"] = WiFi.macAddress();
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
 
@@ -87,13 +81,20 @@ void messageHandler(String &topic, String &payload) {
 }
 
 void setup() {
-  Serial.begin(9600);
-  //connectAWS();
+  Serial.begin(115200);
+  pinMode(13, OUTPUT);
+  delay(1000);
+  connectAWS();
 }
 
 void loop() {
-  pingTest();
-  //publishMessage();
+  digitalWrite(13, HIGH);
   client.loop();
-  delay(1000);
+  publishMessage();
+  publishMessage();
+  publishMessage();
+  while(true) {
+    pingTest();
+    delay(1000);
+  };
 }
