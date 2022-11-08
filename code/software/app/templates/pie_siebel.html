@@ -19,25 +19,37 @@
         ]);
 
         var options = {
-          title: 'Siebel 4022',
-          is3D: true,
+          title: 'Siebel 4022: ',
+          titleTextStyle: {
+            fontName: "Georgia",
+            fontSize: 16,
+            bold: true,
+            italic: false
+          },
+          is3D: true ,
+          // font-style: bold,
         };
-
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data, options);
       }
     </script>
 </head>
 <body>
-	<div style="margin: 10px 0 0 10px;width: 1000px">
+	<div style="margin: 0px 0 0 0px;width: 1000px">
     <style>
-      h1.textstyle {
-          font-family: "Brush Script MT"
+      h1.textstyle_title {
+          font-family: "Georgia";
+          font-style: oblique;
+          color: #2e7b07
+      }
+      h4.textstyle_occupancy {
+        font-family: "Georgia"
       }
     </style>
-		<h1><center>Occupancy of Rooms</center></h1>
-		
-		<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+		<h1 class = "textstyle_title"><center>Occupancy of Rooms</center></h1>
+		<div id="piechart_3d" style="width: 800px; height: 400px; "></div>
+    <h4 class = "textstyle_occupancy" ><center> Roughly ~{{full_count}} occupants in this room</center></h4>
+    <h4 class = "textstyle_occupancy"><center> Last Updated: {{now_time}}</center></h4>
 	</div>
 </body>
 </html>
