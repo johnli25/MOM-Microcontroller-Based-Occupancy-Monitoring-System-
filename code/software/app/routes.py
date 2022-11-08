@@ -4,6 +4,6 @@ from app import app
 
 @app.route("/")
 def home_page():
-    siebel4022_data = {'Task' : 'Hours per Day', 'Full' : 12, 'Not Full' : 37} 
+    siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : 37, 'Full' : 12} 
 
     return render_template("pie_siebel.html",data=siebel4022_data)
