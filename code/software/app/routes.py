@@ -11,7 +11,8 @@ def home_page():
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
+    battery = 56
     print(d)
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
 
-    return render_template("pie_siebel.html",data=siebel4022_data, full_count=full_count, now_time=d)
+    return render_template("pie_siebel.html",data=siebel4022_data, full_count=full_count, now_time=d, battery=battery)
