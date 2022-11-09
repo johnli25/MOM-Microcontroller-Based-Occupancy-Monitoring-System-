@@ -14,7 +14,7 @@ resource = boto3.resource(
    region_name           = "us-east-1"
 )
 
-MovieTable = resource.Table('Occupancy_data')
+occ_table = resource.Table('Occupancy_data')
 
 def get_items():
     return dynamo_client.scan(

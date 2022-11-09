@@ -19,6 +19,10 @@ def home_page():
     return render_template("pie_siebel.html",data=siebel4022_data, full_count=full_count, now_time=d, battery=battery)
     # return jsonify(connectAWS.get_items())
 
+class DB:
+    def retrieve_value(sensor, metric=None):
+        return DB.retrieve_values(sensor, metric)[0]
+
 # @app.route('/get-items')
 # def get_items():
 #     return jsonify(connectAWS.get_items())
