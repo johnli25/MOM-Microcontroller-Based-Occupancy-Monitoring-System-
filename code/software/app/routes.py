@@ -13,7 +13,7 @@ def root_route():
 #  Route: http://localhost:5000/book
 #  Method : POST
 @app.route('/book', methods=['POST'])
-def addABook():
+def addItemFlask():
 
     data = request.get_json()
     # id, title, author = 1001, 'Angels and Demons', 'Dan Brown'
@@ -33,8 +33,8 @@ def addABook():
 #  Route: http://localhost:5000/book/<id>
 #  Method : GET
 @app.route('/book/<int:id>', methods=['GET'])
-def ReadItem(id):
-    response = dynamodb_aws_handler.GetItemFromBook(id)
+def ReadItemFlask(id):
+    response = dynamodb_aws_handler.ReadItem(id)
     
     if (response['ResponseMetadata']['HTTPStatusCode'] == 200):
         
@@ -51,9 +51,9 @@ def ReadItem(id):
 #  Route: http://localhost:5000/book/<id>
 #  Method : DELETE
 @app.route('/book/<int:id>', methods=['DELETE'])
-def DeleteAnItem(id):
+def DeleteAnItemFlask(id):
 
-    response = dynamodb_aws_handler.DeleteAnItemFromBook(id)
+    response = dynamodb_aws_handler.DeleteAnItem(id)
 
     if (response['ResponseMetadata']['HTTPStatusCode'] == 200):
         return {
@@ -68,14 +68,14 @@ def DeleteAnItem(id):
 #  Route: http://localhost:5000/book/<id>
 #  Method : PUT
 @app.route('/book/<int:id>', methods=['PUT'])
-def UpdateItem(id):
+def UpdateItemFlask(id):
 
     data = request.get_json()
     # data = {
     #     'title': 'Angels And Demons',
     #     'author': 'Daniel Brown'
     # }
-    response = dynamodb_aws_handler.UpdateItemInBook(id, data)
+    response = dynamodb_aws_handler.UpdateItem(id, data)
 
     if (response['ResponseMetadata']['HTTPStatusCode'] == 200):
         return {
