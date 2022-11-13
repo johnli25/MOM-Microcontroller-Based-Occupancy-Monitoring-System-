@@ -5,10 +5,10 @@ import pytz
 from datetime import datetime
 from app import connectAWS as dynamodb_aws_handler
 
-@app.route('/')
-def root_route():
-    dynamodb_aws_handler.create_occupancy_table()
-    return 'Hello World'
+# @app.route('/')
+# def root_route():
+#     dynamodb_aws_handler.create_occupancy_table()
+#     return 'Hello World'
 
 #  Route: http://localhost:5000/book
 #  Method : POST
@@ -114,6 +114,21 @@ def UpdateItemFlask(id):
 
 @app.route("/")
 def home_page():
+    # dynamodb_aws_handler.create_occupancy_table()
+    print(dynamodb_aws_handler.Occupancy_table)
+    # response = dynamodb_aws_handler.Occupancy_table.get_item(Key={
+    #     "sample_time": 1667948705117,
+    #     "device_id": 22
+    # })
+    # data = response['Items']
+
+    # while 'LastEvaluatedKey' in response:
+    #     response = dynamodb_aws_handler.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+    #     data.extend(response['Items'])
+    items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
+    for item in items:
+        print (item)
+        
     not_full_count = 37
     full_count = 12
     d = datetime.now()

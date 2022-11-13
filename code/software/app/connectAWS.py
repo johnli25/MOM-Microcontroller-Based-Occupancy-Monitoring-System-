@@ -3,7 +3,7 @@ from boto3 import resource
 import config
 
 AWS_ACCESS_KEY_ID = 'AKIA5BSW6IQX6DQ35V5T' # config.AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY = '262lq95' # config.AWS_SECRET_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY = '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' # config.AWS_SECRET_ACCESS_KEY
 REGION_NAME = 'us-east-1' # config.REGION_NAME
 
 client = boto3.client(
