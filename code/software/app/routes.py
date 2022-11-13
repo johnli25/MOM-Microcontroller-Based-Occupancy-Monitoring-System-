@@ -116,29 +116,38 @@ def UpdateItemFlask(id):
 def home_page():
     # dynamodb_aws_handler.create_occupancy_table()
     print(dynamodb_aws_handler.Occupancy_table)
-    # response = dynamodb_aws_handler.Occupancy_table.get_item(Key={
-    #     "sample_time": 1667948705117,
-    #     "device_id": 22
-    # })
+    response = dynamodb_aws_handler.Occupancy_table.get_item(Key={
+        "sample_time": 1667948705117,
+        "device_id": 22
+    })
     # data = response['Items']
 
     # while 'LastEvaluatedKey' in response:
     #     response = dynamodb_aws_handler.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
     #     data.extend(response['Items'])
+    print("--------a run--------")
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
+    print(type(items))
     for item in items:
-        print (item)
+        print (type(item))
+        print(item.keys())
+        print(item['device_data']['battery'])
+        print(item['device_data']['counts'])
+        print(item['device_data']['location'])
+
+
         
     not_full_count = 37
-    full_count = 12
+    full_count = items[0]['device_data']['counts']
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
-    battery = 56
+    battery = items[0]['device_data']['battery']
+    print(battery)
     print(d)
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
-    print("test")
-    return render_template("pie_siebel.html",data=siebel4022_data, full_count=full_count, now_time=d, battery=battery)
+    device_id = items[0]['device_id']
+    return render_template("pie_siebel.html",data=siebel4022_data, full_count=full_count, now_time=d, battery=battery, device_id=device_id)
     # return jsonify(connectAWS.get_items())
 
 class DB:
