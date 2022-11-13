@@ -2,16 +2,95 @@ import boto3
 from boto3 import resource
 import config
 
-AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY = config.AWS_SECRET_ACCESS_KEY
-REGION_NAME = config.REGION_NAME
- 
-resource = resource('dynamodb',
-   aws_access_key_id     = AWS_ACCESS_KEY_ID,
-   aws_secret_access_key = AWS_SECRET_ACCESS_KEY,
-   region_name           = REGION_NAME
+AWS_ACCESS_KEY_ID = 'AKIA5BSW6IQX6DQ35V5T' # config.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = '262lq95' # config.AWS_SECRET_ACCESS_KEY
+REGION_NAME = 'us-east-1' # config.REGION_NAME
+
+client = boto3.client(
+    'dynamodb',
+    aws_access_key_id     = AWS_ACCESS_KEY_ID,
+    aws_secret_access_key = AWS_SECRET_ACCESS_KEY,
+    region_name           = REGION_NAME
 )
 
+resource = resource('dynamodb',
+    aws_access_key_id     = AWS_ACCESS_KEY_ID,
+    aws_secret_access_key = AWS_SECRET_ACCESS_KEY,
+    region_name           = REGION_NAME
+)
+
+def create_occupancy_table():   
+    table = client.create_table(
+        TableName = 'Occupancy_data', # Name of the table
+        KeySchema = [
+            {
+                'AttributeName': 'id',
+                'KeyType'      : 'HASH' #RANGE = sort key, HASH = partition key
+            }
+        ],
+        AttributeDefinitions = [
+            {
+                'AttributeName': 'id', # Name of the attribute
+                'AttributeType': 'N'   # N = Number (B= Binary, S = String)
+            }
+        ],
+        ProvisionedThroughput={
+            'ReadCapacityUnits'  : 10,
+            'WriteCapacityUnits': 10
+        }
+   )
+    return table
+
+Occupancy_table = resource.Table('Occupancy_data')
+
+def addItem(id, title, author):
+    response = Occupancy_table.put_item(
+        Item = {
+            'id'     : id,
+            'title'  : title,
+            'author' : author,
+            'likes'  : 0
+        }
+    )
+    return response
+
+def ReadItem(id):
+    response = Occupancy_table.get_item(
+        Key = {
+            'id'     : id
+        },
+        AttributesToGet=[
+            'title', 'author'
+        ]
+    )
+    return response
+
+def UpdateItem(id, data:dict):
+    response = Occupancy_table.update_item(
+        Key = {
+            'id': id
+        },
+        AttributeUpdates={
+            'title': {
+                'Value'  : data['title'],
+                'Action' : 'PUT' # available options -> DELETE(delete), PUT(set), ADD(increment)
+            },
+            'author': {
+                'Value'  : data['author'],
+                'Action' : 'PUT'
+            }
+        },
+        ReturnValues = "UPDATED_NEW" # returns the new updated values
+    )
+    return response
+
+def DeleteAnItem(id):
+    response = Occupancy_table.delete_item(
+        Key = {
+            'id': id
+        }
+    )
+    return response
 # client = boto3.client('dynamodb',
 #   aws_access_key_id='AKIA5BSW6IQX6DQ35V5T',
 #   aws_secret_access_key='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',
@@ -21,7 +100,6 @@ resource = resource('dynamodb',
 # table = dynamodb.Table('Occupancy_data')
 
 # table.get_time(
-
 
 # )
 
@@ -48,16 +126,11 @@ resource = resource('dynamodb',
 #     # table = dynamodb.Table('Ocuupancy_data')
 #     # print(table)
 #     # return table
-import boto3
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-
-table = dynamodb.Table('Occupancy_data')
-
-response = table.scan()
+response = Occupancy_table.scan()
 data = response['Items']
 
 while 'LastEvaluatedKey' in response:
-    response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+    response = Occupancy_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
     data.extend(response['Items'])
 
 #https://dynobase.dev/dynamodb-python-with-boto3/
