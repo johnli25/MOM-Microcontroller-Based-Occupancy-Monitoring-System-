@@ -8,6 +8,9 @@
 - [2022-10-02: Calculations and Design Approaches for the Schematic](README.md#2022-10-02-calculations-and-design-approaches-for-the-schematic)
 - [2022-10-11: Concerns that arose while doing early testing](README.md#2022-10-11-concerns-that-arose-while-doing-early-testing)
 - [2022-10-21: Thinking about implementation](README.md#2022-10-21-thinking-about-implementation)
+- [2022-10-26: Experimenting with Probe Requests](README.md#2022-10-26-experimenting-with-probe-requests)
+- [2022-11-04: Integrating AWS IoT](README.md#2022-11-04-integrating-aws-iot)
+- [2022-11-11: Device Enclosure Preparation with Machine Shop](README.md#2022-11-11-device-enclosure-preparation-with-machine-shop)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
@@ -114,3 +117,34 @@ Fortunately, one of the references in our RFA/design document proposes another w
 
 ## 2022-10-21: Thinking about implementation
 So while we're waiting for our PCB to come in, we've been developing using the development board that we ordered. So far, we have had a bit of success with the current code that we have. Now, we're trying to look for ways to optimize the counting algorithm and make it as accurate as we can. This involves a bit more testing and some more math. We've also started researching how to implment the IoT Cloud subsystem on AWS and how to connect the development board to it. 
+
+## 2022-10-26: Experimenting with Probe Requests
+I spent a couple days this week trying to tune the parameters for Wi-Fi scanning. However, one of the problems that I found while I was experimenting was with respect to the frequency that devices send probe requests while already connected to a network. When a device sends a probe while already connected to a network, it sends significantly fewer probe requests than if it were not connected. 
+
+One of my experiments this week involved finding the time intervals in which different computer operating systems send probe requests while already connected to a network. I put a MOM node next to the devices I was testing and let it collect data over a period of one hour. These devices consisted of my laptop running Windows 10/11, a smartphone running Android, a smartphone running iOS, and one of my roommate's laptops running macOS. My roommate and I were actively using our respective laptops, while both smartphones were left in a locked state.
+
+During this one hour interval, I found that devices running Windows 10/11 send a probe request about every 10 minutes (which can be seen in the screenshots below). On one occasion, our MOM device caught traffic from the Windows device less than 2 minutes after its previous probe request, but this wouldn't have an effect on how we plan on measuring occupancy if this happened in the real world. 
+
+![Windows 10 Probe Request detection 1](screenshots/win10+11_probe_log_1.png)
+![Windows 10 Probe Request detection 2](screenshots/win10+11_probe_log_2.png)
+![Windows 10 Probe Request detection 3](screenshots/win10+11_probe_log_3.png)
+
+We also found that the probe request interval for MacBooks running macOS is also about every 10 minutes. However, we found that iOS rarely sends probe requests when it is locked. This could be a double-edged sword. On one hand, it helps mitigate over-counting people if they have multiple Wi-Fi devices. On the other hand, if a person isn't using their laptop (if they are taking a break from studying, for example) we could be under-counting because the MOM node would not count the actively used smartphone. In the end, I'll still need to figure out if (and how) we can keep the occupancy measurement as close to ground truth as possible.
+
+## 2022-11-04: Integrating AWS IoT
+I spent the bulk of this week adding the integration with AWS IoT into the microcontroller codebase. To publish the occupancy data to the database for the web application to use, the microcontroller will use the MQTT protocol to send messages to the AWS IoT Core. The AWS IoT Core can then forward the MQTT message it receives from the MOM device to a database via a forwarding rule. The web application can read from the database to update the occupancy data on the web page. This follows the official AWS IoT Core flow diagram below.
+
+![Official AWS IoT flow diagram](https://d1.awsstatic.com/IoT/diagrams/AWS%20IoT%20Core%20-%20Connect%20and%20Manage.edb43e92d542f4053727eaeda267e3776382fd06.png)
+
+Since there is only one Wi-Fi antenna on the ESP32-S3, it cannot be connected to the internet and scan for Wi-FI traffic simultaneously. To overcome this, I programmed the microcontroller to switch between the two modes. Depending on what part of the data collection flow the MOM node is currently on, it will set the Wi-Fi antenna to the corresponding mode. When it is scanning, the antenna is put into promiscuous mode. After a certain amount of time, promiscuous mode is turned off, and it starts to estimate the occupancy based on the scan data. After it does that, it will set the Wi-Fi antenna to station mode and connect to the internet and AWS. Once it publishes the data, it will disconnect from the internet and re-enable promiscuous mode to scan for probe requests again. See the flowchart and an example demo screenshot below.
+
+![MOM Device Flowchart](screenshots/MOM_Device_Program_Flowchart.png)
+
+![MOM IoT Core Demo](screenshots/IoT_Core_Demo.png)
+
+## 2022-11-11: Device Enclosure Preparation with Machine Shop
+I spent this week with more attempts of fine tuning the occupancy estimation algorithm. Unfortunately, I couldn't get too much progress with this, even after reading some more research papers on the topic. The primary issue with referencing most of the research papers on the topic of occupancy detection through probe requests is the fact that the scenarios that apply to the research publications don't apply to the scenario in which we are deploying MOM. I briefly touch on this in [2022-10-26: Experimenting with Probe Requests](README.md#2022-10-26-experimenting-with-probe-requests), but to elaborate, the research publications target scenarios when the devices are not already connected to a network, such as on public transportation or while out and about. 
+
+In these scenarios, client devices send probe requests much more frequently, allowing the researchers to use algorithms to map patterns to estimate occupancy. Since we plan on deploying MOM devices in places such as a public library, the devices will already be connected to a network like IllinoisNet. This makes it harder for us to keep tabs on these devices in real-time since they don't send probe requests often, if at all, while already connected to the internet. I am trying to come up with an algorithm of my own to estimate occupancy in our situation, which I will be continuing work on next week.
+
+Meanwhile, I was also working with Gregg from the Machine Shop this week to build an enclosure for our MOM device. We found a plastic enclosure that suits the size of our PCB and backup battery. A plastic enclosure should not affect any the signal strength parameters that the algorithm uses since plastic is practically invisible to the 2.4GHz waves that we are using. Gregg and the others from the Machine Shop will drill holes in the plastic enclosure so that the MOM board can be mounted to the case. Also, a hole will be made on one side of the enclosure for the USB-C port on the board, allowing for easy connection with a USB-C cable to program and power the board while it is in the case.
