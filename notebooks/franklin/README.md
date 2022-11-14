@@ -10,6 +10,7 @@
 - [2022-10-21: Thinking about implementation](README.md#2022-10-21-thinking-about-implementation)
 - [2022-10-26: Experimenting with Probe Requests](README.md#2022-10-26-experimenting-with-probe-requests)
 - [2022-11-04: Integrating AWS IoT](README.md#2022-11-04-integrating-aws-iot)
+- [2022-11-11: Device Enclosure Preparation with Machine Shop](README.md#2022-11-11-device-enclosure-preparation-with-machine-shop)
 
 ## 2022-09-13: Post-Meeting Notes 
 We just talked with our mentor TA about our initial block diagram, high-level and subsystem requirements, and about some of the parts that we are planning on using for the project. She had some great suggestions for us that we think would benefit our project, especially since she had a very similar project when she took the course. \
