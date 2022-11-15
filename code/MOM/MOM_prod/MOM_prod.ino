@@ -5,7 +5,6 @@
 #include <ESP32Ping.h>
 
 #define LED_GPIO_PIN            13
-#define STATUS_PUBLISH_TOPIC    "MOM/heartbeat"
 #define OCCU_PUBLISH_TOPIC      "MOM/occupancy"
 #define LOCATION                "Siebel 1404"
 #define MIN_RSSI                -50
@@ -50,7 +49,7 @@ bool connectAWS() {
   net.setPrivateKey(AWS_CERT_PRIVATE);
 
   mqttClient.begin(AWS_IOT_ENDPOINT, 8883, net);
-  printf("\nConnecting to AWS IoT");
+  printf("Connecting to AWS IoT");
 
   while (!mqttClient.connect(THINGNAME)) {
     printf(".");
@@ -75,7 +74,7 @@ void publishMessage() {
   if (connectAWS()) {
     StaticJsonDocument<200> doc;
     doc["location"] = LOCATION;
-    doc["count"] = mac_list.size();
+    doc["occupancy"] = mac_list.size();
     doc["battery"] = 92.21;
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer);
