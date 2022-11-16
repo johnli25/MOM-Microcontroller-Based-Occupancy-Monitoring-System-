@@ -107,14 +107,9 @@ def home_page():
     #     response = dynamodb_aws_handler.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
     #     data.extend(response['Items'])
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
-    # print(type(items))
-    # for item in items:
-    #     print (type(item))
-    #     print(item.keys())
-    #     print(item['device_data']['battery'])
-    #     print(item['device_data']['counts'])
-    #     print(item['device_data']['location'])
-
+    global maxNumOfRoomsInDB 
+    maxNumOfRoomsInDB = len(items)
+    print(maxNumOfRoomsInDB)
     not_full_count = 37
     full_count = int(items[room_idx]['device_data']['occupancy'])
     d = datetime.now()
@@ -133,14 +128,14 @@ def home_page():
 @app.route("/update")
 def update_home_page():
     global room_idx
-    room_idx = (room_idx + 1) % 2
+    room_idx = (room_idx + 1) % maxNumOfRoomsInDB
     response = dynamodb_aws_handler.Occupancy_table.get_item(Key={
         "sample_time": 1667948705117,
         "device_id": 22
     })
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
     not_full_count = 37
-    full_count = int(items[room_idx]['device_data']['counts'])
+    full_count = int(items[room_idx]['device_data']['occupancy'])
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
@@ -156,7 +151,3 @@ def update_home_page():
 class DB:
     def retrieve_value(sensor, metric=None):
         return DB.retrieve_values(sensor, metric)[0]
-
-# @app.route('/get-items')
-# def get_items():
-#     return jsonify(connectAWS.get_items())
