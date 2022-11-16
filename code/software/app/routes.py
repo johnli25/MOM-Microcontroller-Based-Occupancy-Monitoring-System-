@@ -116,7 +116,7 @@ def home_page():
     #     print(item['device_data']['location'])
 
     not_full_count = 37
-    full_count = int(items[room_idx]['device_data']['counts'])
+    full_count = int(items[room_idx]['device_data']['occupancy'])
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')

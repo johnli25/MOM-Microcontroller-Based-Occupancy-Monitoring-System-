@@ -3,20 +3,38 @@
 
 #include <ArduinoJson.h>
 #include <ESP32Ping.h>
+#include <SparkFun_MAX1704x_Fuel_Gauge_Arduino_Library.h>
 
 #define LED_GPIO_PIN            13
 #define OCCU_PUBLISH_TOPIC      "MOM/occupancy"
 #define LOCATION                "Siebel 1404"
-#define MIN_RSSI                -50
+#define MIN_RSSI                -30
 #define TARGET_RSSI             (MIN_RSSI + 10)
 
 
+SFE_MAX1704X lipo;
+int batteryPercent;
+bool batteryGaugeConnected;
 uint8_t channel = 11;
 uint64_t last_transmission_to_aws;
 LinkedList<mac_list_item_t> mac_list = LinkedList<mac_list_item_t>();
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient mqttClient = MQTTClient(256);
 
+void batteryGaugeInit() {
+  Wire.begin(3, 4); // Battery gauge SDA and SCL on GPIO3 and 4, respectively
+  int stateOfCharge;
+  batteryGaugeConnected = lipo.begin();
+  if(batteryGaugeConnected == false) {
+    Serial.println("MAX battery fuel gauge not detected. Battery percent will read -1;");
+  }
+  lipo.quickStart();
+  // Get a sample to see if the battery was connected in the first place
+  stateOfCharge = (int) lipo.getSOC();
+  if (stateOfCharge > 100) {
+    batteryGaugeConnected = false;
+  }
+}
 
 bool connectWiFi() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -75,7 +93,10 @@ void publishMessage() {
     StaticJsonDocument<200> doc;
     doc["location"] = LOCATION;
     doc["occupancy"] = mac_list.size();
-    doc["battery"] = 92.21;
+    if (batteryGaugeConnected) {
+      batteryPercent = (int) lipo.getSOC();
+    }
+    doc["battery"] = batteryPercent;
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer);
 
@@ -226,6 +247,7 @@ void wifi_sniffer_packet_handler(void* buff, wifi_promiscuous_pkt_type_t type) {
 
 void setup() {
   Serial.begin(115200);
+  batteryGaugeInit();
   WiFi.mode(WIFI_STA);
   pinMode(LED_GPIO_PIN, OUTPUT);
   wifi_sniffer_init();
@@ -251,8 +273,10 @@ void loop() {
   // Transmit to AWS IoT every minute
   if (esp_timer_get_time() / 1000 - last_transmission_to_aws >= 60000) {
     esp_wifi_set_promiscuous(false);
-    connectWiFi();
-    publishMessage();
+    if(connectWiFi()) {
+      publishMessage();
+    }
+    esp_wifi_set_promiscuous(true);
     last_transmission_to_aws = esp_timer_get_time() / 1000;
   }
 }

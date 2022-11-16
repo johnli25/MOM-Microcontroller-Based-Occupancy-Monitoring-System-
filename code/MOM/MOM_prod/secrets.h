@@ -7,8 +7,11 @@
 #define SECRET
 #define THINGNAME "MOM"
 
-const char WIFI_SSID[] = "NETGEAR81";
-const char WIFI_PASSWORD[] = "curlycanoe007";
+
+const char WIFI_SSID[] = "IllinoisNet_Guest";
+const char WIFI_PASSWORD[] = "";
+// const char WIFI_SSID[] = "NETGEAR81";
+// const char WIFI_PASSWORD[] = "curlycanoe007";
 const char AWS_IOT_ENDPOINT[] = "a3ulqjae98hapx-ats.iot.us-east-1.amazonaws.com";
 
 // Amazon Root CA 1
