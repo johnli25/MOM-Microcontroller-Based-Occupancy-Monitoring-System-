@@ -12,7 +12,7 @@
 - [2022-10-25: Implementation details + Assigning locker](README.md#2022-10-25-Implementation-details-and-Assigning-locker)
 - [2022-11-04: Developing the Front End of the Web App](README.md#2022-11-04-Developing-the-Front-End-of-the-Web App)
 - [2022-11-15: Mock Demo](README.md#2022-11-15-Mock-Demo)
-- [2022-11-24: Mock Demo](README.md#2022-11-24-Happy-Thanksgiving!)
+- [2022-11-24: Thanksgiving Break](README.md#2022-11-24-Happy-Thanksgiving!)
 
 ## 2022-09-13: Meeting-Notes
 
