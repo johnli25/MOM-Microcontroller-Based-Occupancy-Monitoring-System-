@@ -9,8 +9,10 @@
 - [2022-10-04: Design-Document-review-and-presentation](README.md#2022-09-25-Design-Document-review-and-presentation)
 - [2022-10-07: Finalizing-and-Ordering-Parts](README.md#2022-10-07-Finalizing-and-Ordering-Parts)
 - [2022-10-18: More Findings about our Project](README.md#2022-10-18-More-Findings-about-our-Project)
-
-- [2022-10-25: Implementation details + Assigning locker](README.md#2022-10-18-Implementation-details-and-Assigning-locker)
+- [2022-10-25: Implementation details + Assigning locker](README.md#2022-10-25-Implementation-details-and-Assigning-locker)
+- [2022-11-04: Developing the Front End of the Web App](README.md#2022-11-04-Developing-the-Front-End-of-the-Web App)
+- [2022-11-15: Mock Demo](README.md#2022-11-15-Mock-Demo)
+- [2022-11-24: Mock Demo](README.md#2022-11-24-Happy-Thanksgiving!)
 
 ## 2022-09-13: Meeting-Notes
 
@@ -76,10 +78,31 @@ We also discussed design document details. For example, creating a system/subsys
 
 - Our team finished finalizing and ordering all the necessary components for our project (PCB, etc.). Now we are just waiting for everything to arrive.
 
-## 2022-10-18: Implementation details and Assigning locker
+## 2022-10-25: Implementation details and Assigning locker
 
 - We started writing the hardware arduino code for our project (Franklin started this) and cloud/AWS side of our project (Vish and I started looking and writing implementations for this)
 - We also got a locker assigned to us, but it currently does not work.
+
+## 2022-11-04: Developing-the-Front-End-of-the-Web-App
+
+- The past couple works, I've been in charge of developing the front end side of the web app. 
+- I used the Flask Python module to both design the front end and set up the pertinent connections and endpoints to our backend DynamoDB.
+- I followed a Bootstrap + Jinja template for our front end design. The advantages for these web templates are 1) relatively simple learning curve with ample guides online 2) reactive/responsive 3) Provides a variety of designs, colors, graphs, charts, etc.
+- The front end design is written in several HTML files so far: 'index.html' and 'pie-siebel.html'
+
+## 2022-11-15: Mock-Demo
+- Our group just performed a mock demo, and it went pretty well in my opinion. TAs said the demo went smoothly and we covered many of the requirements and verifications. We also received some very constructive feedback on what we need to address.
+- Overall as a group, we need to run more tests on probing the number of devices/people in a closed room. Afterward, we will, together as a group, add more functionalities to ensure our occupancy probing and identifying algorithms and microcontroller sensor data collections are more smooth and consistent in both accuracy and latency
+- On the web app side, I have to slightly update 1) the DynamoDB database structure/organizationd and 2) web app functionality in order to pull the most recent data from each room since we made a slight modification/optimization in that regard.
+- This is optional but highly recommend. Change the front end design so there's one "home page" which lists all the rooms available on the web app. Then you can "click" on each room in order to navigate to that room and its occupancy metrics. 
+- Also, if I have more time, prettify the web app by adding some more reactive widgets/features and colors. This part shouldn't be too hard
+
+## 2022-11-24: Happy-Thanksgiving!
+- Grind the points mentioned above and the rest of the MOM project over Thanksgiving break. Halfway-mostly done with the listed points in the entry above. Be ready for the real demo
+- Happy Thanksgiving!
+
+
+
 
 
 
