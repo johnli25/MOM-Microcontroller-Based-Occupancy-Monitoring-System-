@@ -7,7 +7,7 @@ from app import connectAWS as dynamodb_aws_handler
 
 # https://medium.com/featurepreneur/crud-operations-on-dynamodb-with-flask-apis-916f6cae992
 
-room_idx = 1 # global static room index
+room_idx = 0 # global static room index
 items = dynamodb_aws_handler.Occupancy_table.scan()['Items'] # declare and initialize here just to set the global value maxNumOfRoomsInDB
 maxNumOfRoomsInDB = len(items)
 def parseLatestRoomData(itemsDB):
@@ -25,8 +25,6 @@ def parseLatestRoomData(itemsDB):
 def home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
 
-    global maxNumOfRoomsInDB 
-    maxNumOfRoomsInDB = len(items)
     room_idx = 0
 
     not_full_count = 37 # has to be changed!
@@ -37,6 +35,11 @@ def home_page():
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
 
     roomsToLatestOccupancy, roomsToLatestBattery = parseLatestRoomData(items)
+
+    global maxNumOfRoomsInDB 
+    # maxNumOfRoomsInDB = len(items) # deprecated-no longer the case. Instead...
+    maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
+    
     # battery = items[room_idx]['device_data']['battery']
     location = items[room_idx]['device_data']['location']
     battery = roomsToLatestBattery[location]
@@ -52,6 +55,8 @@ def home_page():
 def update_home_page():
     global room_idx
     room_idx = (room_idx + 1) % maxNumOfRoomsInDB
+    print(maxNumOfRoomsInDB)
+    print(room_idx)
 
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
 
