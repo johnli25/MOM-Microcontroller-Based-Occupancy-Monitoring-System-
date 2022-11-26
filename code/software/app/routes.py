@@ -8,12 +8,12 @@ from app import connectAWS as dynamodb_aws_handler
 # https://medium.com/featurepreneur/crud-operations-on-dynamodb-with-flask-apis-916f6cae992
 
 room_idx = 0 # global static room index
-items = dynamodb_aws_handler.Occupancy_table.scan()['Items'] # declare and initialize here just to set the global value maxNumOfRoomsInDB
-maxNumOfRoomsInDB = len(items)
+maxNumOfRoomsInDB = 0 # declare and initialize to filler value, 0
+
 def parseLatestRoomData(itemsDB):
     roomToLatestOccupancy = {}
     roomToLatestBattery = {}
-    print(itemsDB)
+    # print(itemsDB)
     for item in itemsDB:
         roomToLatestOccupancy[item['device_data']['location']] = item['device_data']['occupancy']
         roomToLatestBattery[item['device_data']['location']] = item['device_data']['battery']
@@ -26,10 +26,7 @@ def home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
 
     room_idx = 0
-
-    not_full_count = 37 # has to be changed!
-    full_count = int(items[room_idx]['device_data']['occupancy'])
-
+    
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
@@ -40,8 +37,8 @@ def home_page():
     # maxNumOfRoomsInDB = len(items) # deprecated-no longer the case. Instead...
     maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
     
-    # battery = items[room_idx]['device_data']['battery']
-    location = items[room_idx]['device_data']['location']
+    not_full_count = 37 # has to be changed!
+    location = items[room_idx]['device_data']['location'] # initial location
     battery = roomsToLatestBattery[location]
     full_count = int(roomsToLatestOccupancy[location])
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
@@ -53,21 +50,30 @@ def home_page():
 
 @app.route("/update")
 def update_home_page():
+    items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
+    roomsToLatestOccupancy, roomsToLatestBattery = parseLatestRoomData(items)
+    # maxNumOfRoomsInDB = len(items) # deprecated-no longer the case. Instead...
+    maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
+    # print("max # of rooms", maxNumOfRoomsInDB)
+    
     global room_idx
     room_idx = (room_idx + 1) % maxNumOfRoomsInDB
-    print(maxNumOfRoomsInDB)
-    print(room_idx)
+    # print("room idx", room_idx)
 
-    items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
-
-    not_full_count = 37
-    full_count = int(items[room_idx]['device_data']['occupancy'])
+    not_full_count = 37 # has to be changed!
     d = datetime.now()
     dt = pytz.timezone('America/Chicago').localize(d)
     d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
 
-    battery = items[room_idx]['device_data']['battery']
-    location = items[room_idx]['device_data']['location']
+    not_full_count = 37 # has to be changed!
+
+    location_key_list = list(roomsToLatestBattery.keys())
+    nextLocationKey = location_key_list[room_idx]
+    print(location_key_list)
+    location = nextLocationKey
+
+    battery = roomsToLatestBattery[location]
+    full_count = int(roomsToLatestOccupancy[location])
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
     device_id = items[room_idx]['device_id']
 
