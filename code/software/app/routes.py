@@ -25,6 +25,9 @@ def parseLatestRoomData(itemsDB):
 def home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
 
+    sorted(items, key=lambda x: int(x['sample_time']))
+    items.reverse()
+    # print((items))
     room_idx = 0
     
     d = datetime.now()
@@ -51,6 +54,9 @@ def home_page():
 @app.route("/update")
 def update_home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
+    sorted(items, key=lambda x: int(x['sample_time']))
+    items.reverse()
+    
     roomsToLatestOccupancy, roomsToLatestBattery = parseLatestRoomData(items)
     # maxNumOfRoomsInDB = len(items) # deprecated-no longer the case. Instead...
     maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
