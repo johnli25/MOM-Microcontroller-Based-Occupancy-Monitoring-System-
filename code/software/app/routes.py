@@ -44,7 +44,7 @@ def home_page():
     maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
     
     not_full_count = 37 # has to be changed!
-    location = items[room_idx]['device_data']['location'] # initial location
+    location = items[len(items) - 1]['device_data']['location'] # initial location
     # battery = roomsToLatestBattery[location]
     # full_count = int(roomsToLatestOccupancy[location])
     battery = items[len(items) - 1]['device_data']['battery']
