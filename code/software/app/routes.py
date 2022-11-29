@@ -13,7 +13,6 @@ maxNumOfRoomsInDB = 0 # declare and initialize to filler value, 0
 def parseLatestRoomData(itemsDB):
     roomToLatestOccupancy = {}
     roomToLatestBattery = {}
-    # print(itemsDB)
     for item in itemsDB:
         roomToLatestOccupancy[item['device_data']['location']] = item['device_data']['occupancy']
         roomToLatestBattery[item['device_data']['location']] = item['device_data']['battery']
@@ -26,13 +25,10 @@ def home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
     items = sorted(items, key=lambda x: int(x['sample_time']))
     print(items[len(items) - 1])
-    # print(items)
     print(len(items))
     file1 = open("output.txt", "w") 
-    # for c in items:
     file1.write(str(items))
     file1.close()
-  
     # items.reverse()
     # print((items))
     room_idx = 0
