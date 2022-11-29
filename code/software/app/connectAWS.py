@@ -6,8 +6,6 @@ AWS_ACCESS_KEY_ID = 'AKIA5BSW6IQXVWMBIH6D' # config.AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = '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' # config.AWS_SECRET_ACCESS_KEY
 REGION_NAME = 'us-east-1' # config.REGION_NAME
 
-
-
 client = boto3.client(
     'dynamodb',
     aws_access_key_id     = AWS_ACCESS_KEY_ID,
@@ -93,26 +91,4 @@ def DeleteAnItem(id):
         }
     )
     return response
-# table.get_time()
 
-# dynamo_client = boto3.client('dynamodb')
-
-# occ_table = resource.Table('Occupancy_data')
-
-# def get_items():
-#     return dynamo_client.scan(
-#         TableName='Occupancy_data'
-#     )
-#     # table = dynamodb.Table('Ocuupancy_data')
-#     # print(table)
-#     # return table
-# response = Occupancy_table.get_items()
-# data = response['Items']
-
-# while 'LastEvaluatedKey' in response:
-#     response = Occupancy_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-#     data.extend(response['Items'])
-
-#https://dynobase.dev/dynamodb-python-with-boto3/
-
-#https://www.youtube.com/watch?v=UuX2AFq_OkU&list=PLz8JBMMd7yjUHKAimoaN2A3aEr20Hq9yB&index=3
