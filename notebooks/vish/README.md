@@ -9,6 +9,12 @@
 - [9/26/22: Design Document Draft Review with TA and Professor](README.md#9/26/22:-Design-Document-Draft-Review-with-TA-and-Professor)
 - [10/4/22: Design Document Presentation](README.md#10/4/22:-Design-Document-Presentation)
 - [10/16/22: Development Board Testing](README.md#10/16/22:-Development-Board-Testing)
+- [10/24/22: Parts and waiting on PCB](README.md#10/24/22:-Parts-and-waiting-on-PCB)
+- [10/31/22: AWS pipeline](README.md#10/31/22:-AWS-pipeline)
+- [11/5/22: IoT rule and DynamoDB](README.md#11/5/22:-IoT-rule-and-DynamoDB)
+- [11/10/22: Flask Web App](README.md#11/10/22:-Flask-Web-App)
+- [11/16/22: Elastic Beanstalk](README.md#11/16/22: Elastic Beanstalk)
+- [11/27/22: ](README.md#)
 
 
 ## 9/13/22: First Meeting with TA
@@ -45,3 +51,8 @@ After the MQTT data is saved in the IoT Core we need to save that data in a data
 
 ## 11/10/22: Flask Web App
 Now that all the data is saved in DynamoDB, the Flask Web app needs to pull this and display it on the application. I had some trouble with getting the access keys from AWS IAM initially, but after setting up the certificates correctly the Flask Web app was able to pull from my AWS account.
+
+## 11/16/22: Elastic Beanstalk
+Since our web application should be accessible from any device, we need a place to host it from that can be accessible easily. Elastic Beanstalk seemed like a good option because it automatically handles the deployment details of capacity provisioning, load balancing, automatic scaling, and web application health monitoring. When trying to initially host it there, we ran into some trouble of getting the dependencies to work in the virtual environment. However, after including a requirements.txt file and writing an appropriate config file, the deployment was successful.
+
+## 11/27/22: 

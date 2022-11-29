@@ -7,9 +7,11 @@
 
 #define LED_GPIO_PIN            13
 #define OCCU_PUBLISH_TOPIC      "MOM/occupancy"
-#define LOCATION                "Siebel 1404"
-#define MIN_RSSI                -30
-#define TARGET_RSSI             (MIN_RSSI + 10)
+#define LOCATION                "ECEB Senior Design Lab"
+#define MIN_RSSI                -59
+#define TARGET_RSSI             -45
+#define FIXED_POINT_FACTOR      100
+#define CONTRIBUTION_FACTOR     (FIXED_POINT_FACTOR / 20)
 
 
 SFE_MAX1704X lipo;
@@ -26,19 +28,15 @@ void batteryGaugeInit() {
   int stateOfCharge;
   batteryGaugeConnected = lipo.begin();
   if(batteryGaugeConnected == false) {
-    Serial.println("MAX battery fuel gauge not detected. Battery percent will read -1;");
+    printf("MAX battery fuel gauge not detected. Battery percent will read -1\n");
+    batteryPercent = -1;
   }
   lipo.quickStart();
-  // Get a sample to see if the battery was connected in the first place
-  stateOfCharge = (int) lipo.getSOC();
-  if (stateOfCharge > 100) {
-    batteryGaugeConnected = false;
-  }
 }
 
 bool connectWiFi() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  printf("Connecting to Wi-Fi");
+  printf("Connecting to Wi-Fi.");
   uint64_t connect_time_start = esp_timer_get_time() / 1000000; // Seconds since boot
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -50,7 +48,7 @@ bool connectWiFi() {
       return false;
     }
   }
-  Serial.println("Connected!");
+  printf(" Connected!\n");
   return true;
 }
 
@@ -67,7 +65,7 @@ bool connectAWS() {
   net.setPrivateKey(AWS_CERT_PRIVATE);
 
   mqttClient.begin(AWS_IOT_ENDPOINT, 8883, net);
-  printf("Connecting to AWS IoT");
+  printf("Connecting to AWS IoT.");
 
   while (!mqttClient.connect(THINGNAME)) {
     printf(".");
@@ -75,24 +73,42 @@ bool connectAWS() {
   }
 
   if (!mqttClient.connected()) {
-    Serial.println("\nTimed out while connecting to AWS IoT Core!");
+    printf("\nTimed out while connecting to AWS IoT Core!");
     return false;
   }
 
-  Serial.println("\nConnected!");
+  printf(" Connected!\n");
   return true;
 }
 
 void disconnectAWS() {
   bool disconnected = mqttClient.disconnect();
-  Serial.println("Disconnected from AWS IoT.");
+  printf("Disconnected from AWS IoT.\n");
+}
+
+int estimateOccupancy() {
+  mac_list_item_t curr_mac;
+  int sum = 0;
+  int diff, contribution;
+  for (int i = 0; i < mac_list.size(); i++) {
+    curr_mac = mac_list.get(i);
+    if (curr_mac.rssi >= TARGET_RSSI) {
+      sum += FIXED_POINT_FACTOR;
+    }
+    else {
+      diff = curr_mac.rssi - MIN_RSSI;
+      contribution = diff * CONTRIBUTION_FACTOR + 1;
+      sum += contribution;
+    }
+  }
+  return sum / FIXED_POINT_FACTOR;
 }
 
 void publishMessage() {
   if (connectAWS()) {
     StaticJsonDocument<200> doc;
     doc["location"] = LOCATION;
-    doc["occupancy"] = mac_list.size();
+    doc["occupancy"] = estimateOccupancy();
     if (batteryGaugeConnected) {
       batteryPercent = (int) lipo.getSOC();
     }
@@ -101,7 +117,8 @@ void publishMessage() {
     serializeJson(doc, jsonBuffer);
 
     mqttClient.publish(OCCU_PUBLISH_TOPIC, jsonBuffer);
-    disconnectAWS();    
+    disconnectAWS();
+    printf("Published {\"location\": %s, \"occupancy\": %d, \"battery\": %d} to %s\n", LOCATION, estimateOccupancy(), batteryPercent, OCCU_PUBLISH_TOPIC);
   }
 }
 
@@ -141,11 +158,11 @@ void add_mac_to_list(uint8_t mac0, uint8_t mac1, uint8_t mac2, uint8_t mac3, uin
   seen_mac.rssi = rssi;
   // If the OUI's local bit is set, it's likely randomized
   seen_mac.is_random = (mac0 & 0b00000010); 
-  if (rssi <= TARGET_RSSI) {
-    seen_mac.ttl = TTL_1_MIN;
+  if (rssi < TARGET_RSSI) {
+    seen_mac.ttl = TTL_1_MIN * 3;
   }
   else {
-    seen_mac.ttl = TTL_10_MIN;
+    seen_mac.ttl = TTL_1_MIN * 10;
   }
 
   for (i = 0; i < mac_list.size(); i++) {
@@ -168,6 +185,7 @@ void print_seen_macs() {
     curr = mac_list.get(i);
     printf("%02x:%02x:%02x:%02x:%02x:%02x at time = %llu with RSSI = %d and is_random = %d\n", curr.mac_addr[0], curr.mac_addr[1], curr.mac_addr[2], curr.mac_addr[3], curr.mac_addr[4], curr.mac_addr[5], curr.timestamp, curr.rssi, curr.is_random);
   }
+  printf("Estimated occupancy: %d\n", estimateOccupancy());
 }
 
 void remove_departed_macs() {
