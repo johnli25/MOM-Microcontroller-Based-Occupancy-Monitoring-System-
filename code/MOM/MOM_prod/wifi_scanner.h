@@ -18,14 +18,11 @@
 
 #define WIFI_CHANNEL_SWITCH_INTERVAL    500
 #define WIFI_CHANNEL_MAX                 11
-#define NUM_IGNORABLE_OUIS               74
+#define NUM_IGNORABLE_OUIS               75
 #define BYTES_IN_OUI                      3
 #define BYTES_IN_MAC                      6
 #define MAC_LIST_LEN                    256
 #define TTL_1_MIN                       60000
-#define TTL_5_MIN                       300000
-#define TTL_10_MIN                      600000
-
 
 typedef struct {
   unsigned frame_ctrl:16;
@@ -117,6 +114,7 @@ uint8_t ignorable_ouis[NUM_IGNORABLE_OUIS][BYTES_IN_OUI] = {
   {228,95,1},
   {40,205,193},
   {255,255,255},
+  {0xF4, 0x12, 0xFA}  // Ignore self
 };
 
 typedef struct {
