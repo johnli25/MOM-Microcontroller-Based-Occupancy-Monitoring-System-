@@ -24,9 +24,16 @@ def parseLatestRoomData(itemsDB):
 @app.route("/")
 def home_page():
     items = dynamodb_aws_handler.Occupancy_table.scan()['Items']
-
-    sorted(items, key=lambda x: int(x['sample_time']))
-    items.reverse()
+    items = sorted(items, key=lambda x: int(x['sample_time']))
+    print(items[len(items) - 1])
+    # print(items)
+    print(len(items))
+    file1 = open("output.txt", "w") 
+    # for c in items:
+    file1.write(str(items))
+    file1.close()
+  
+    # items.reverse()
     # print((items))
     room_idx = 0
     
@@ -42,8 +49,10 @@ def home_page():
     
     not_full_count = 37 # has to be changed!
     location = items[room_idx]['device_data']['location'] # initial location
-    battery = roomsToLatestBattery[location]
-    full_count = int(roomsToLatestOccupancy[location])
+    # battery = roomsToLatestBattery[location]
+    # full_count = int(roomsToLatestOccupancy[location])
+    battery = items[len(items) - 1]['device_data']['battery']
+    full_count = items[len(items) - 1]['device_data']['occupancy']
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
     device_id = items[room_idx]['device_id']
 
