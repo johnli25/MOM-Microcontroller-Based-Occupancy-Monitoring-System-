@@ -32,10 +32,6 @@ def home_page():
     # items.reverse()
     # print((items))
     room_idx = 0
-    
-    d = datetime.now()
-    dt = pytz.timezone('America/Chicago').localize(d)
-    d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
 
     roomsToLatestOccupancy, roomsToLatestBattery = parseLatestRoomData(items)
 
@@ -49,6 +45,8 @@ def home_page():
     # full_count = int(roomsToLatestOccupancy[location])
     battery = items[len(items) - 1]['device_data']['battery']
     full_count = items[len(items) - 1]['device_data']['occupancy']
+    d = datetime.fromtimestamp(items[len(items) - 1]['sample_time'] / 1000)
+    d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
     device_id = items[room_idx]['device_id']
 
