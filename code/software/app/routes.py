@@ -39,13 +39,14 @@ def home_page():
     # maxNumOfRoomsInDB = len(items) # deprecated-no longer the case. Instead...
     maxNumOfRoomsInDB = len(roomsToLatestBattery) # len of roomsToLatestData dictionary
     
-    not_full_count = 37 # has to be changed!
     location = items[len(items) - 1]['device_data']['location'] # initial location
     # battery = roomsToLatestBattery[location]
     # full_count = int(roomsToLatestOccupancy[location])
     battery = items[len(items) - 1]['device_data']['battery']
     full_count = items[len(items) - 1]['device_data']['occupancy']
-    d = datetime.fromtimestamp(items[len(items) - 1]['sample_time'] / 1000)
+    not_full_count = max(0, 37 - full_count) # has to be changed!
+    print(full_count)
+    d = datetime.fromtimestamp(int(items[len(items) - 1]['sample_time'] / 1000))
     dt = pytz.timezone("America/Chicago")
     d = d.astimezone(dt).strftime('%B %d, %Y ; %I:%M:%S %p')
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
