@@ -8,7 +8,7 @@
 #define LED_GPIO_PIN            13
 #define OCCU_PUBLISH_TOPIC      "MOM/occupancy"
 #define LOCATION                "ECEB Senior Design Lab"
-#define MIN_RSSI                -59
+#define MIN_RSSI                -58
 #define TARGET_RSSI             -42
 #define FIXED_POINT_FACTOR      100
 #define CONTRIBUTION_FACTOR     (FIXED_POINT_FACTOR / 20)
@@ -117,8 +117,11 @@ int estimateOccupancy() {
     sum += contribution;
   }
   sum /= FIXED_POINT_FACTOR;
+  if (mac_list.size() >= 5 && sum >= 19 ) {
+    sum -= 1;
+  }
   if (sum >= 20) {
-    sum /= (sum / 10) + 1;
+    sum /= 2;
   }
   return sum;
 }
@@ -182,10 +185,10 @@ void add_mac_to_list(uint8_t mac0, uint8_t mac1, uint8_t mac2, uint8_t mac3, uin
   // If the OUI's local bit is set, it's likely randomized
   seen_mac.is_random = (mac0 & 0b00000010); 
   if (rssi < TARGET_RSSI) {
-    seen_mac.ttl = TTL_1_MIN;
+    seen_mac.ttl = TTL_1_MIN + 40000;
   }
   else {
-    seen_mac.ttl = TTL_1_MIN * 3;
+    seen_mac.ttl = TTL_1_MIN + 150000;
   }
 
   for (i = 0; i < mac_list.size(); i++) {
