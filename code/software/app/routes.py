@@ -46,7 +46,8 @@ def home_page():
     battery = items[len(items) - 1]['device_data']['battery']
     full_count = items[len(items) - 1]['device_data']['occupancy']
     d = datetime.fromtimestamp(items[len(items) - 1]['sample_time'] / 1000)
-    d = d.strftime('%B %d, %Y ; %I:%M:%S %p')
+    dt = pytz.timezone("America/Chicago")
+    d = d.astimezone(dt).strftime('%B %d, %Y ; %I:%M:%S %p')
     siebel4022_data = {'Task' : 'Hours per Day', 'Not Full' : not_full_count, 'Full' : full_count} 
     device_id = items[room_idx]['device_id']
 
