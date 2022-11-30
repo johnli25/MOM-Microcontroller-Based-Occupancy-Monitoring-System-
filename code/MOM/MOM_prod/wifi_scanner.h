@@ -123,6 +123,7 @@ typedef struct {
   int8_t rssi;
   bool is_random;
   uint64_t ttl;
+  bool reappearance;
 } mac_list_item_t;
 
 #endif // WIFI_SCANNER_H

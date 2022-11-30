@@ -9,7 +9,7 @@
 #define OCCU_PUBLISH_TOPIC      "MOM/occupancy"
 #define LOCATION                "ECEB Senior Design Lab"
 #define MIN_RSSI                -59
-#define TARGET_RSSI             -45
+#define TARGET_RSSI             -42
 #define FIXED_POINT_FACTOR      100
 #define CONTRIBUTION_FACTOR     (FIXED_POINT_FACTOR / 20)
 
@@ -39,7 +39,7 @@ bool connectWiFi() {
   printf("Connecting to Wi-Fi.");
   uint64_t connect_time_start = esp_timer_get_time() / 1000000; // Seconds since boot
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(200);
     printf(".");
     // Enforce 5-second timeout
     if (esp_timer_get_time() / 1000000 - connect_time_start > 5) {
@@ -90,18 +90,37 @@ int estimateOccupancy() {
   mac_list_item_t curr_mac;
   int sum = 0;
   int diff, contribution;
+  uint64_t time_alive;
+  uint64_t curr_time = esp_timer_get_time() / 1000;
+  if (mac_list.size() >= 5) {
+    sum = 1;
+  }
   for (int i = 0; i < mac_list.size(); i++) {
     curr_mac = mac_list.get(i);
     if (curr_mac.rssi >= TARGET_RSSI) {
-      sum += FIXED_POINT_FACTOR;
+      contribution = FIXED_POINT_FACTOR;
+    }
+    else if (curr_mac.reappearance) {
+      contribution = FIXED_POINT_FACTOR - 20;
+      time_alive = curr_time - curr_mac.timestamp;
+      contribution -= (int)(time_alive * FIXED_POINT_FACTOR / curr_mac.ttl / 2);
     }
     else {
       diff = curr_mac.rssi - MIN_RSSI;
       contribution = diff * CONTRIBUTION_FACTOR + 1;
-      sum += contribution;
+      time_alive = curr_time - curr_mac.timestamp;
+      contribution -= (int)(time_alive * FIXED_POINT_FACTOR / curr_mac.ttl / 2);
     }
+    if (contribution < 0) {
+      contribution = 0;
+    }
+    sum += contribution;
   }
-  return sum / FIXED_POINT_FACTOR;
+  sum /= FIXED_POINT_FACTOR;
+  if (sum >= 20) {
+    sum /= (sum / 10) + 1;
+  }
+  return sum;
 }
 
 void publishMessage() {
@@ -111,6 +130,9 @@ void publishMessage() {
     doc["occupancy"] = estimateOccupancy();
     if (batteryGaugeConnected) {
       batteryPercent = (int) lipo.getSOC();
+      if (batteryPercent > 100) {
+        batteryPercent = 100;
+      }
     }
     doc["battery"] = batteryPercent;
     char jsonBuffer[512];
@@ -156,19 +178,21 @@ void add_mac_to_list(uint8_t mac0, uint8_t mac1, uint8_t mac2, uint8_t mac3, uin
   seen_mac.mac_addr[5] = mac5;
   seen_mac.timestamp = timestamp;
   seen_mac.rssi = rssi;
+  seen_mac.reappearance = false;
   // If the OUI's local bit is set, it's likely randomized
   seen_mac.is_random = (mac0 & 0b00000010); 
   if (rssi < TARGET_RSSI) {
-    seen_mac.ttl = TTL_1_MIN * 3;
+    seen_mac.ttl = TTL_1_MIN;
   }
   else {
-    seen_mac.ttl = TTL_1_MIN * 10;
+    seen_mac.ttl = TTL_1_MIN * 3;
   }
 
   for (i = 0; i < mac_list.size(); i++) {
     mac_list_item_t curr = mac_list.get(i);
     if (curr.mac_addr[0] == mac0 && curr.mac_addr[1] == mac1 && curr.mac_addr[2] == mac2 && 
       curr.mac_addr[3] == mac3 && curr.mac_addr[4] == mac4 && curr.mac_addr[5] == mac5) {
+      seen_mac.reappearance = true;
       mac_list.set(i, seen_mac);
       break;
     }
@@ -192,7 +216,7 @@ void remove_departed_macs() {
   mac_list_item_t curr;
   for (int i = 0; i < mac_list.size(); i++) {
     curr = mac_list.get(i);
-    // Remove if this MAC hasn't been seen for at least a minute
+    // Remove if this MAC has gone over its TTL
     if (esp_timer_get_time() / 1000 - curr.timestamp >= curr.ttl) {
       mac_list.remove(i);
       i--;
@@ -240,7 +264,7 @@ void wifi_sniffer_packet_handler(void* buff, wifi_promiscuous_pkt_type_t type) {
   }
 
   uint64_t timestamp = ppkt->rx_ctrl.timestamp / 1000;  // milliseconds since boot
-  add_mac_to_list(hdr->addr1[0], hdr->addr1[1], hdr->addr1[2], hdr->addr1[3], hdr->addr1[4], hdr->addr1[5], timestamp, ppkt->rx_ctrl.rssi);
+  // add_mac_to_list(hdr->addr1[0], hdr->addr1[1], hdr->addr1[2], hdr->addr1[3], hdr->addr1[4], hdr->addr1[5], timestamp, ppkt->rx_ctrl.rssi);
   add_mac_to_list(hdr->addr2[0], hdr->addr2[1], hdr->addr2[2], hdr->addr2[3], hdr->addr2[4], hdr->addr2[5], timestamp, ppkt->rx_ctrl.rssi);
   add_mac_to_list(hdr->addr3[0], hdr->addr3[1], hdr->addr3[2], hdr->addr3[3], hdr->addr3[4], hdr->addr3[5], timestamp, ppkt->rx_ctrl.rssi);
 
@@ -288,11 +312,19 @@ void loop() {
   vTaskDelay(WIFI_CHANNEL_SWITCH_INTERVAL / portTICK_PERIOD_MS);
   remove_departed_macs();
   print_seen_macs();
+  int connectCounter = 4;
+  bool connectedThisLoop = false;
   // Transmit to AWS IoT every minute
   if (esp_timer_get_time() / 1000 - last_transmission_to_aws >= 60000) {
     esp_wifi_set_promiscuous(false);
-    if(connectWiFi()) {
-      publishMessage();
+    while(connectCounter-- && !connectedThisLoop) {
+      if (connectWiFi()) {
+        publishMessage();
+        connectedThisLoop = true;
+      }
+      else {
+        delay(100);
+      }
     }
     esp_wifi_set_promiscuous(true);
     last_transmission_to_aws = esp_timer_get_time() / 1000;
