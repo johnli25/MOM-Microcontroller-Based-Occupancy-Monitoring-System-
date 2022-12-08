@@ -13,6 +13,7 @@
 - [2022-11-04: Developing the Front End of the Web App](README.md#2022-11-04-Developing-the-Front-End-of-the-Web App)
 - [2022-11-15: Mock Demo](README.md#2022-11-15-Mock-Demo)
 - [2022-11-24: Thanksgiving Break](README.md#2022-11-24-Happy-Thanksgiving!)
+- [2022-11-28: Finishing project for the final demo](README.md#2022-11-28-Finishing-project-for-the-final-demo!)
 
 ## 2022-09-13: Meeting-Notes
 
@@ -101,7 +102,24 @@ We also discussed design document details. For example, creating a system/subsys
 - Grind the points mentioned above and the rest of the MOM project over Thanksgiving break. Halfway-mostly done with the listed points in the entry above. Be ready for the real demo
 - Happy Thanksgiving!
 
+## 2022-11-28: Finishing-project-for-the-final-demo
+- Finished all the technical/implementation aspects of the project --> ready to demo
+- Web application is up, running, and deployed properly, DynamoDB is finished and presents and organizes data in a clean manner, and MOM device successfully reads WiFi signals and uploads to the AWS cloud successfully.
+- Prep for demo by reviewing what Franklin, Vish, and I will be presenting which aspects of the project
 
+#2022-11-29: Demo
+- Demo went great! TAs, peer reviewers, and professor liked our project!
+
+#2022-12-4: Preparing-for-final-presentation
+- Prepared slides presentation and what Franklin, Vish, and I will be saying at the presentation
+- Try on suits
+- Prepared for our final presentation by doing mock presentation 
+- also created a video the other day demonstrating our project/MOM device in action
+
+#2022-12-6: Final-presentation
+- Final presentation went great!
+- Some intriguing questions by the peer reviewers-if we had the time, their questions/suggestion are 100% worth considering!
+- Done with project! Had a lot of fun working on it with my team. Lots of onerous, hard work and very stressful at times throughout the semester, but we got through it!
 
 
 
