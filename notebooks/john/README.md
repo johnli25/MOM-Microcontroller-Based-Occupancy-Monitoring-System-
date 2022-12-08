@@ -14,7 +14,8 @@
 - [2022-11-15: Mock Demo](README.md#2022-11-15-Mock-Demo)
 - [2022-11-24: Thanksgiving Break](README.md#2022-11-24-Happy-Thanksgiving!)
 - [2022-11-28: Finishing project for the final demo](README.md#2022-11-28-Finishing-project-for-the-final-demo!)
-
+- [2022-12-4: Preparing-for-final-presentation](README.md#2022-12-4-Preparing-for-final-presentation)
+- [2022-12-6: Final-presentation](README.md#2022-12-4-Final-presentation)
 ## 2022-09-13: Meeting-Notes
 
 Discussed with TA regarding our project proposal and our system and subsystem designs. Some things and suggestions to take note of:
