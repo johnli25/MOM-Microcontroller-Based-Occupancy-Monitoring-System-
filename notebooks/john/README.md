@@ -16,7 +16,7 @@
 - [2022-11-28: Finishing project for the final demo](README.md#2022-11-28-Finishing-project-for-the-final-demo!)
 - [2022-12-4: Preparing-for-final-presentation](README.md#2022-12-4-Preparing-for-final-presentation)
 - [2022-12-6: Final-presentation](README.md#2022-12-4-Final-presentation)
-## 2022-09-13: Meeting-Notes
+## 2022-09-13: Meeting Notes
 
 Discussed with TA regarding our project proposal and our system and subsystem designs. Some things and suggestions to take note of:
 - Add subcomponents for the cloud server for block diagram.
@@ -24,7 +24,7 @@ Discussed with TA regarding our project proposal and our system and subsystem de
 - Expand high-level requirement involving power to include 24-hour availability while the board is plugged in.
 - Don't bother making your own Wi-Fi module; just buy one since budget is $150.
 
-## 2022-09-14: Hardware-Components-Research
+## 2022-09-14: Hardware Components Research
 
 Since we have a limited $150 budget, all of our purchases will most likely be limited to Amazon, Digikey, and Mouser. Parts we are leaning toward using:
 
@@ -40,7 +40,7 @@ Since we have a limited $150 budget, all of our purchases will most likely be li
 - [AP2112 Voltage Regulator](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112M-3-3TRG1/5305555) (3.3V): The ESP32 series of SoCs all use 3.3 volts as their operating voltage. Since all USB types generally operating at or above 5 volts, we need to drop the voltage down. 3.3 V is a very common voltage for these sort of scenarios
 - [MCP73831T Battery Charge Controller](https://www.digikey.com/en/products/detail/microchip-technology/MCP73831T-2DCI-OT/1979804): mainly used to prevent overcharging
 
-## 2022-09-16: Meeting-With-Jack-Blevins
+## 2022-09-16: Meeting With Jack Blevins
 
 We met with Jack Blevins, a UIUC alum whom has earned one of the first EECS degrees
 back in 1970 and has a 50+-year track record spanning all kinds of
