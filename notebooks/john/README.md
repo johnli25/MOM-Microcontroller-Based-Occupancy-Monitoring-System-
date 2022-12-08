@@ -16,8 +16,8 @@
 - [2022-11-28: Finishing project for the final demo](README.md#2022-11-28-Finishing-project-for-the-final-demo!)
 - [2022-12-4: Preparing-for-final-presentation](README.md#2022-12-4-Preparing-for-final-presentation)
 - [2022-12-6: Final-presentation](README.md#2022-12-4-Final-presentation)
-## 2022-09-13: Meeting Notes
 
+## 2022-09-13: Meeting Notes
 Discussed with TA regarding our project proposal and our system and subsystem designs. Some things and suggestions to take note of:
 - Add subcomponents for the cloud server for block diagram.
 - Label necessary voltages at each power line for block diagram.
@@ -25,7 +25,6 @@ Discussed with TA regarding our project proposal and our system and subsystem de
 - Don't bother making your own Wi-Fi module; just buy one since budget is $150.
 
 ## 2022-09-14: Hardware Components Research
-
 Since we have a limited $150 budget, all of our purchases will most likely be limited to Amazon, Digikey, and Mouser. Parts we are leaning toward using:
 
 **Control Unit and Radio Scanner Suite**
@@ -41,7 +40,6 @@ Since we have a limited $150 budget, all of our purchases will most likely be li
 - [MCP73831T Battery Charge Controller](https://www.digikey.com/en/products/detail/microchip-technology/MCP73831T-2DCI-OT/1979804): mainly used to prevent overcharging
 
 ## 2022-09-16: Meeting With Jack Blevins
-
 We met with Jack Blevins, a UIUC alum whom has earned one of the first EECS degrees
 back in 1970 and has a 50+-year track record spanning all kinds of
 projects in industry (recommended to use by Professor Lumetta), and will essentially serve as another, "informal" mentor for our 445 project. Our team gave an overview of our project and followed up with some questions and comments from Jack:
