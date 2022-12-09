@@ -106,16 +106,16 @@ We also discussed design document details. For example, creating a system/subsys
 - Web application is up, running, and deployed properly, DynamoDB is finished and presents and organizes data in a clean manner, and MOM device successfully reads WiFi signals and uploads to the AWS cloud successfully.
 - Prep for demo by reviewing what Franklin, Vish, and I will be presenting which aspects of the project
 
-#2022-11-29: Demo
+## 2022-11-29: Demo
 - Demo went great! TAs, peer reviewers, and professor liked our project!
 
-#2022-12-4: Preparing-for-final-presentation
+## 2022-12-4: Preparing-for-final-presentation
 - Prepared slides presentation and what Franklin, Vish, and I will be saying at the presentation
 - Try on suits
 - Prepared for our final presentation by doing mock presentation 
 - also created a video the other day demonstrating our project/MOM device in action
 
-#2022-12-6: Final-presentation
+## 2022-12-6: Final-presentation
 - Final presentation went great!
 - Some intriguing questions by the peer reviewers-if we had the time, their questions/suggestion are 100% worth considering!
 - Done with project! Had a lot of fun working on it with my team. Lots of onerous, hard work and very stressful at times throughout the semester, but we got through it!
