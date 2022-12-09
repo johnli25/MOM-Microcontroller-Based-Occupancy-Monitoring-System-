@@ -1,7 +1,7 @@
 # Vish's Lab Notebook
 
 ## Table of Contents
----
+
 - [9/13/22: First Meeting with TA](README.md#9/13/22:-First-Meeting-with-TA)
 - [9/16/22: Meeting with Jack Blevins](README.md#9/16/22:-Meeting-with-Jack-Blevins)
 - [9/17/22: Identifying signals from only phones](README.md#9/17/22:-Identifying-signals-from-only-phones)
@@ -13,8 +13,10 @@
 - [10/31/22: AWS pipeline](README.md#10/31/22:-AWS-pipeline)
 - [11/5/22: IoT rule and DynamoDB](README.md#11/5/22:-IoT-rule-and-DynamoDB)
 - [11/10/22: Flask Web App](README.md#11/10/22:-Flask-Web-App)
-- [11/16/22: Elastic Beanstalk](README.md#11/16/22: Elastic Beanstalk)
-- [11/27/22: ](README.md#)
+- [11/16/22: Elastic Beanstalk](README.md#11/16/22:-Elastic-Beanstalk)
+- [11/27/22: Future Work and Improvements](README.md#11/27/22:-Future-Work-and-Improvements)
+- [12/2/22: Post Demo and Preparations for Final Presentation](README.md#12/2/22:-Post-Demo-and-Preparations-for-Final-Presentation)
+
 
 
 ## 9/13/22: First Meeting with TA
@@ -35,7 +37,7 @@ The Professor gave us some very helpful advice on revising our design doc. Some 
 - Don't have random numbers in the requirements. There should be a clear reasoning behind the figures that we are coming up with. 
 
 ## 10/4/22: Design Document Presentation
-We had our design document presentation yesterday and although we did pretty well, there were a few things that the professor and other peer reviewers brought up. In order to get within our 85% estimation for accuracy that we had in our high level requirement, we are going to have to calibrate our RSSI value when we start prototyping with our MOM board. This value boundary may change depending on the size of the room/sector where we are testing as well, so we would have to do multiple iterations of it to find out what works to meet our accuracy requirement. During our meeting today there was also a good discussion we had about placement of the devices in a room. For example, what if someone on a floor above the room placed their phone on the ground, while the MOM board was attached on the ceiling of the room below. Arguably, the RSSI value from that device would be higher due to its proximity. Another case might be when a phone is charging from a wall outlet from a shared wall with the room where the MOM board is affixed to. Once again, the MOM board might be picking up signals from that phone, thinking it's also a part of the room. There's a lot of nuances like these cases that we have to do trial-and-error experiments to find an optimal RSSI value to calibrate our MOM boards to looks out for.
+We had our design document presentation yesterday and although we did pretty well, there were a few things that the professor and other peer reviewers brought up. In order to get within our 85% estimation for accuracy that we had in our high-level requirement, we are going to have to calibrate our RSSI value when we start prototyping with our MOM board. This value boundary may change depending on the size of the room/sector where we are testing as well, so we would have to do multiple iterations of it to find out what works to meet our accuracy requirement. During our meeting today there was also a good discussion we had about placement of the devices in a room. For example, what if someone on a floor above the room placed their phone on the ground, while the MOM board was attached on the ceiling of the room below. Arguably, the RSSI value from that device would be higher due to its proximity. Another case might be when a phone is charging from a wall outlet from a shared wall with the room where the MOM board is affixed to. Once again, the MOM board might be picking up signals from that phone, thinking it's also a part of the room. There's a lot of nuances like these cases that we have to do trial-and-error experiments to find an optimal RSSI value to calibrate our MOM boards to looks out for.
 
 ## 10/16/22: Development Board Testing
 After we received our ESP32 Development Board we started working on figuring out how to pick up probe requests. One of the issues that we found while running our tests was that Apple devices were randomizing their MAC addresses. While all Apple devices did this on default, it was also possible to randomize the hardware addresses for devices running Windows. This would be a problem for our MOM device design, because it would count a probe request coming from a different MAC address every time as a different device, when in fact it might just be the same device sending probe requests with a randomized hardware address every time.
@@ -55,4 +57,10 @@ Now that all the data is saved in DynamoDB, the Flask Web app needs to pull this
 ## 11/16/22: Elastic Beanstalk
 Since our web application should be accessible from any device, we need a place to host it from that can be accessible easily. Elastic Beanstalk seemed like a good option because it automatically handles the deployment details of capacity provisioning, load balancing, automatic scaling, and web application health monitoring. When trying to initially host it there, we ran into some trouble of getting the dependencies to work in the virtual environment. However, after including a requirements.txt file and writing an appropriate config file, the deployment was successful.
 
-## 11/27/22: 
+## 11/27/22: Future Work and Improvements
+Contrary to our initial inception of the project where we wanted to use both Bluetooth and Wi-Fi signals for occupancy monitoring, we could only implement it with Wi-Fi signals in the end. Implementing occupancy monitoring using Bluetooth proved to be a lot harder than what we expected. However, in the future given more time to work on the project we plan on using a weighted average between cumulative Bluetooth and Wi-Fi traffic to better capture how busy a specific room is. 
+
+Another future improvement to our project could be to include a graph of the most popular times when a room is busy and usually open. This graph would go right below our occupancy pie chart on our web application. The graph would forecast when a room is most available based on historical occupancy data that we would have collected and stored in our database. Using this approach, we could get a rough estimate of the number of people for a given future time. To forecast future occupancy, we could also use more sophisticated models such as an LSTM (Long Short-Term Memory) model which is a type of recurrent neural network that has vast applications when given time series data as inputs. Here is an [article](https://machinelearningmastery.com/how-to-develop-lstm-models-for-time-series-forecasting/) summarizing this well. It can predict pretty accurately when given proper data points and trained appropriately.
+
+## 12/2/22: Post Demo and Preparations for Final Presentation
+Our demo went great earlier this week, and our MOM device was 100% accurate in estimating the number of occupants in the senior design lab when we were demonstrating it. We got great feedback from the professor and TAs. As we get near the end of the semester, we need to finish our last two major assignments: Final Presentation and Final Report. We each went over what we will be presenting and rehearsed our sections with a mock presentation, so it would be smooth during the actual one. Also started working on the Final Report since it is due Wednesday next week.
