@@ -22,5 +22,5 @@ The goal of this project is to create a web app to allow users to determine how 
 - [**notebooks**](notebooks)
   - Contains all individual lab notebooks.
  
-## Our Paper (detailing the project)
+## Our Paper
 https://docs.google.com/document/d/1_Yonm2J6CX8mhwzXziMKUjyanZxK5_y0jXvrXCKz2r4/edit?usp=sharing 
