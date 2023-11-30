@@ -1,6 +1,6 @@
 # Microcontroller-based Occupancy Monitoring (MOM)
 
-### *Won ECE Senior Design Runner-Up Award*
+### *Won ECE Senior Design Runner-Up Award* (Fall 2022)
 
 ## Authors and Acknowledgements
 ECE 445 FA2022 Team 7:
