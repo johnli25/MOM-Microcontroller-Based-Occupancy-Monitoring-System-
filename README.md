@@ -24,3 +24,8 @@ The goal of this project is to create a web app to allow users to determine how 
  
 ## Our Paper
 https://docs.google.com/document/d/1_Yonm2J6CX8mhwzXziMKUjyanZxK5_y0jXvrXCKz2r4/edit?usp=sharing 
+
+## The web app/dashboard
+<img width="465" alt="image" src="https://github.com/johnli25/MOM/assets/59215442/2c58ca27-b695-4e6f-bdcb-2bf111d51bc8">
+
+
