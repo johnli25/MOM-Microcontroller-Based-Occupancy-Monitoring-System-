@@ -23,8 +23,8 @@ The goal of this project is to create a web app to allow users to determine how 
   - Contains all individual lab notebooks.
  
 ## Paper/Report
-https://github.com/johnli25/MOM/blob/4fe8f952a4ed27d478e640dd72d3c75059fbbd7b/MOM%20Paper.pdf
-
+[https://github.com/johnli25/MOM/blob/4fe8f952a4ed27d478e640dd72d3c75059fbbd7b/MOM%20Paper.pdf
+](https://github.com/johnli25/MOM/blob/main/MOM%20Paper.pdf)
 ## The web app/dashboard
 <img width="465" alt="image" src="https://github.com/johnli25/MOM/assets/59215442/2c58ca27-b695-4e6f-bdcb-2bf111d51bc8">
 
